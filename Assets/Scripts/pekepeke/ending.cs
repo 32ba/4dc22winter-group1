@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 
 
-public class ending : MonoBehaviour
+public class Ending : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]

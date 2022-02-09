@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class tutorial1 : MonoBehaviour
+public class Uitext : MonoBehaviour
 {
     public Text nameText;
     public Text talkText;

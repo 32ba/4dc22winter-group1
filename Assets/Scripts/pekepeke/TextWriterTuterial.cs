@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextWriter : MonoBehaviour
+public class TextWriterTuterial : MonoBehaviour
 {
-    public tutorial1 uitext;
+    public Uitext uitext;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,8 +80,4 @@ public class TextWriter : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
