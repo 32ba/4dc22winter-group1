@@ -32,7 +32,6 @@ namespace _32ba
 
             return true;
         }
-            
     }
 }
 
