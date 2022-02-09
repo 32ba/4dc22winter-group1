@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class tutorial1 : MonoBehaviour
 {
     [SerializeField]
     Text scenarioMessage;
@@ -12,6 +13,12 @@ public class GameController : MonoBehaviour
     Scenario currentScenario;
     int index = 0;
 
+    class Option
+    {
+        public string Text;
+        public Action Action;
+        public Func<bool> IsFlagOK = () => { return true; };
+    }
     class Scenario
     {
         public string ScenarioID;
@@ -33,10 +40,15 @@ public class GameController : MonoBehaviour
                 "テスト文章４",
                 "テスト文章５"
             }
+
         };
 
         SetScenario(scenario01);
+
+        
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -47,6 +59,10 @@ public class GameController : MonoBehaviour
             {
                 SetNextMessage();
             }
+        }
+        else if(currentScenario == null)
+        {
+            Debug.Log("チュートリアルガチャシーンへ");
         }
     }
 
@@ -84,4 +100,5 @@ public class GameController : MonoBehaviour
             currentScenario = nextScenario;
         }
     }
+    
 }
