@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using Cysharp.Threading.Tasks;
 using _32ba;
 
 public class QuizManager : MonoBehaviour
@@ -27,6 +29,12 @@ public class QuizManager : MonoBehaviour
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
         _questionId = UnityEngine.Random.Range(0, _questionData.Count);
         SetQuestion(_questionData, _questionId);
+        DelayAsync(1.0f, () => {
+            choicesA.SetActive(true);
+            choicesB.SetActive(true);
+            choicesC.SetActive(true);
+            choicesD.SetActive(true);
+        }).Forget();
     }
 
     public void OnClick(string answer)
@@ -59,7 +67,7 @@ public class QuizManager : MonoBehaviour
     
     private bool AnswerQuestion(List<string[]> data, int id, string answer)
     {
-        var isCorrect = (data[id][5] == answer);
+        var isCorrect = (data[id][5] == answer || data[id][5] == "X");
         Debug.Log(isCorrect ? "正解" : "不正解");
         return isCorrect;
     }
@@ -85,11 +93,22 @@ public class QuizManager : MonoBehaviour
                 choicesBButton.interactable = true;
                 break;
             case "C":
-                choicesBButton.interactable = true;
+                choicesCButton.interactable = true;
                 break;
             case "D":
+                choicesDButton.interactable = true;
+                break;
+            case "X":
+                choicesAButton.interactable = true;
                 choicesBButton.interactable = true;
+                choicesCButton.interactable = true;
+                choicesDButton.interactable = true;
                 break;
         }
+    }
+    private async UniTask DelayAsync(float seconds, UnityAction callback)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(seconds));
+        callback?.Invoke();
     }
 }
