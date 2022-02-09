@@ -41,6 +41,13 @@ public class GachaManager : MonoBehaviour
 
     public void StartGacha(int count)
     {
+        if(DataManager.UsePoint(1000 * count) == false)
+        {
+            Debug.Log("ポイントが足りません！");
+            return;
+        }
+        Debug.Log(DataManager.GetPoint());
+
         results.Clear();
 
         for(int i = 0; i < count; i++)
