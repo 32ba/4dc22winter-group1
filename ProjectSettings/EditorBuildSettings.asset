@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/nemui/Title.unity
+    guid: d4c5452ea92d2e04294cfddec270d535
+  - enabled: 1
+    path: Assets/Scenes/pekepeke/tutorial.unity
+    guid: 0d15a7e58740d0f459b26b937c34dcc2
+  - enabled: 1
+    path: Assets/Scenes/nemui/Credit.unity
+    guid: 071388eb2bafe3e42a0215b666052fb6
   m_configObjects: {}
