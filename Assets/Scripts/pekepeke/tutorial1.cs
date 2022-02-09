@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,99 +6,54 @@ using UnityEngine.UI;
 
 public class tutorial1 : MonoBehaviour
 {
-    [SerializeField]
-    Text scenarioMessage;
-    List<Scenario> scenarios = new List<Scenario>();
+    public Text nameText;
+    public Text talkText;
 
-    Scenario currentScenario;
-    int index = 0;
+    public bool playing = false;
+    public float textSpeed = 0.1f;
 
-    class Option
+    void Start() { }
+
+    // クリックで次のページを表示させるための関数
+    public bool IsClicked()
     {
-        public string Text;
-        public Action Action;
-        public Func<bool> IsFlagOK = () => { return true; };
+        if (Input.GetMouseButtonDown(0)) return true;
+        return false;
     }
-    class Scenario
+
+    // ナレーション用のテキストを生成する関数
+    public void DrawText(string text)
     {
-        public string ScenarioID;
-        public List<string> Texts;
-        public List<string> Options;
-        public string NextScenarioID;
+        nameText.text = "";
+        StartCoroutine("CoDrawText", text);
     }
-    // Start is called before the first frame update
-    void Start()
+    // 通常会話用のテキストを生成する関数
+    public void DrawText(string name, string text)
     {
-        var scenario01 = new Scenario()
+        nameText.text = name + "\n「";
+        StartCoroutine("CoDrawText", text + "」");
+    }
+
+    // テキストがヌルヌル出てくるためのコルーチン
+    IEnumerator CoDrawText(string text)
+    {
+        playing = true;
+        float time = 0;
+        while (true)
         {
-            ScenarioID = "scenario01",
-            Texts = new List<string>()
-            {
-                "テスト文章１",
-                "テスト文章２",
-                "テスト文章３",
-                "テスト文章４",
-                "テスト文章５"
-            }
+            yield return 0;
+            time += Time.deltaTime;
 
-        };
+            // クリックされると一気に表示
+            if (IsClicked()) break;
 
-        SetScenario(scenario01);
-
-        
-
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (currentScenario != null)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetNextMessage();
-            }
+            int len = Mathf.FloorToInt(time / textSpeed);
+            if (len > text.Length) break;
+            talkText.text = text.Substring(0, len);
         }
-        else if(currentScenario == null)
-        {
-            Debug.Log("チュートリアルガチャシーンへ");
-        }
+        talkText.text = text;
+        yield return 0;
+        playing = false;
     }
 
-    void SetScenario(Scenario scenario)
-    {
-        currentScenario = scenario;
-        scenarioMessage.text = currentScenario.Texts[0];
-    }
-
-    void SetNextMessage()
-    {
-        if (currentScenario.Texts.Count > index + 1)
-        {
-            index++;
-            scenarioMessage.text = currentScenario.Texts[index];
-        }
-        else
-        {
-            ExitScenario();
-        }
-    }
-
-    void ExitScenario()
-    {
-        scenarioMessage.text = "";
-        index = 0;
-        if (string.IsNullOrEmpty(currentScenario.NextScenarioID))
-        {
-            currentScenario = null;
-        }
-        else
-        {
-            var nextScenario = scenarios.Find
-                (s => s.ScenarioID == currentScenario.NextScenarioID);
-            currentScenario = nextScenario;
-        }
-    }
-    
 }

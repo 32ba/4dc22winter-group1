@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 557727488}
   - component: {fileID: 557727487}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Choices_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 848955793}
   - component: {fileID: 848955792}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Choices_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 1003358769}
   - component: {fileID: 1003358768}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Choices_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1282,7 +1282,7 @@ GameObject:
   - component: {fileID: 1908298996}
   - component: {fileID: 1908298995}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Choices_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1378,7 +1378,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec67778499169c0479a60acfdc7bbe97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionCSV: {fileID: 0}
+  questionCsv: {fileID: 4900000, guid: bd44ef87d9f5b2c4ba171db7ddf59ba5, type: 3}
+  choicesA: {fileID: 653623233}
+  choicesB: {fileID: 499541972}
+  choicesC: {fileID: 1718344145}
+  choicesD: {fileID: 738173056}
+  questionText: {fileID: 1676688268}
 --- !u!4 &2011622577
 Transform:
   m_ObjectHideFlags: 0
