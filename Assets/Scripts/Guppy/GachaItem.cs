@@ -7,4 +7,6 @@ public class GachaItem : ScriptableObject
 {
     public string itemName = "‚¨‚³‚©‚È";
     public Sprite itemImage;
+    public GameObject live2DModel;
+    public float live2DShowDuration = 1.0f;
 }

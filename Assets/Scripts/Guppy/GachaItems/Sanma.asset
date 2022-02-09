@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Sanma
   m_EditorClassIdentifier: 
   itemName: "\u3055\u3093\u307E"
-  itemImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemImage: {fileID: 21300000, guid: a9a8f179915e1544290a8e2e4c6262fe, type: 3}
+  live2DModel: {fileID: 7431259674463280325, guid: c78441d4273bc194aa6f77c1414c3c74, type: 3}
+  live2DShowDuration: 1.1

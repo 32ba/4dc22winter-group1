@@ -14,6 +14,9 @@ public class GachaManager : MonoBehaviour
     public List<GachaWeight> gachaList;
 
     public GachaResultUI resultUI;
+    public GachaAnimation gachaAnimator;
+
+    public GameObject gachaResult;
 
     private Dictionary<GachaItem, int> gachaWeights;
     private int gachaAllWeight;
@@ -36,17 +39,30 @@ public class GachaManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gachaAnimator.IsAnimPlaying())
+        {
+            gachaResult.SetActive(false);
+            if (Input.GetMouseButtonDown(0))
+            {
+                gachaAnimator.NextGachaItem();
+            }
+        }
+        else
+        {
+            gachaResult.SetActive(true);
+        }
     }
 
     public void StartGacha(int count)
     {
+        /*
         if(DataManager.UsePoint(1000 * count) == false)
         {
             Debug.Log("ポイントが足りません！");
             return;
         }
         Debug.Log(DataManager.GetPoint());
+        */
 
         results.Clear();
 
@@ -60,8 +76,10 @@ public class GachaManager : MonoBehaviour
 
         foreach(GachaItem item in results)
         {
-            Debug.Log(item.name);
+            gachaAnimator.AddGachaItem(item);
         }
+
+        gachaAnimator.StartAnimation();
     }
 
     public GachaItem GetGachaResult()
