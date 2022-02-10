@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using Live2D.Cubism.Rendering;
 
 [System.Serializable]
 public class GachaWeight
@@ -13,6 +14,7 @@ public class GachaWeight
 public enum GachaState
 {
     HOME,
+    WAIT,
     START,
     SHOW_RESULT,
     FINISH
@@ -23,19 +25,22 @@ public class GachaManager : MonoBehaviour
     public List<GachaWeight> gachaList;
 
     public GachaResultUI resultUI;
-    public GachaAnimation gachaAnimator;
+    public GachaAnimation gachaResultAnimation;
 
     public GameObject gachaResultUIObject;
-    public GameObject gachaVideoObject;
+    public CubismRenderController gachaRenderController;
     public GameObject gachaHomeUIObject;
 
-    public VideoPlayer gachaVideoPlayer;
+    public Animator gachaAnimAnimator;
+    public float gachaAnimationTime = 1.0f;
 
     private Gacha gacha;
     private GachaState gachaState;
 
     private bool doSkip = false;
     private List<GachaItem> gachaResults;
+
+    private float animationTime = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +68,8 @@ public class GachaManager : MonoBehaviour
             gachaState = newState;
         }
         UpdateInput(gachaState);
+
+        animationTime = Mathf.Max(animationTime - Time.deltaTime, 0.0f);
     }
 
     /*
@@ -84,19 +91,25 @@ public class GachaManager : MonoBehaviour
 
         if(state == GachaState.START)
         {
+            if(animationTime <= 0.0f)
+            {
+                newState = GachaState.SHOW_RESULT;
+            }
+            /*
             if (gachaVideoPlayer.isPlaying == false)
             {
                 newState = GachaState.SHOW_RESULT;
             }
+            */
         }
         else if(state == GachaState.SHOW_RESULT)
         {
-            if (!gachaAnimator.IsAnimPlaying() || doSkip)
+            if (!gachaResultAnimation.IsAnimPlaying() || doSkip)
             {
                 doSkip = false;
-                if (gachaAnimator.HasNext())
+                if (gachaResultAnimation.HasNext())
                 {
-                    gachaAnimator.Next();
+                    gachaResultAnimation.Next();
                 }
                 else
                 {
@@ -113,7 +126,7 @@ public class GachaManager : MonoBehaviour
         UpdateUI(state);
         if(state == GachaState.FINISH)
         {
-            gachaAnimator.FinishAnimation();
+            gachaResultAnimation.FinishAnimation();
             ShowGachaResult(resultUI, gachaResults);
         }
     }
@@ -123,31 +136,49 @@ public class GachaManager : MonoBehaviour
         if(state == GachaState.HOME)
         {
             gachaResultUIObject.SetActive(false);
-            gachaVideoObject.SetActive(false);
+            gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(true);
         }
         else if(state == GachaState.FINISH)
         {
             gachaResultUIObject.SetActive(true);
-            gachaVideoObject.SetActive(false);
+            gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(false);
+        }
+        else if(state == GachaState.WAIT)
+        {
+            gachaResultUIObject.SetActive(false);
+            gachaRenderController.Opacity = 1f;
+            gachaHomeUIObject.SetActive(false);
+            gachaAnimAnimator.SetBool("Start", false);
         }
         else if(state == GachaState.START)
         {
             gachaResultUIObject.SetActive(false);
-            gachaVideoObject.SetActive(true);
+            gachaRenderController.Opacity = 1f;
             gachaHomeUIObject.SetActive(false);
+
+            animationTime = gachaAnimationTime;
+            gachaAnimAnimator.SetBool("Start", true);
         }
         else if(state == GachaState.SHOW_RESULT)
         {
             gachaResultUIObject.SetActive(false);
-            gachaVideoObject.SetActive(false);
+            gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(false);
+            gachaAnimAnimator.SetBool("Start", false);
         }
     }
 
     private void UpdateInput(GachaState state)
     {
+        if(state == GachaState.WAIT)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ChangeState(GachaState.START);
+            }
+        }
         if(state == GachaState.SHOW_RESULT)
         {
             if (Input.GetMouseButtonDown(0))
@@ -162,8 +193,7 @@ public class GachaManager : MonoBehaviour
         List<GachaItem> results = DoGacha(count);
         SetUpGachaResult(results);
 
-        ChangeState(GachaState.START);
-        gachaVideoPlayer.Play();
+        ChangeState(GachaState.WAIT);
     }
 
     private void SetUpGachaResult(List<GachaItem> results)
@@ -172,7 +202,7 @@ public class GachaManager : MonoBehaviour
 
         foreach (GachaItem item in results)
         {
-            gachaAnimator.AddGachaItem(item);
+            gachaResultAnimation.AddGachaItem(item);
         }
     }
 
