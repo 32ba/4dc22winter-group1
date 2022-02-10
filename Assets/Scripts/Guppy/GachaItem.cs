@@ -9,4 +9,5 @@ public class GachaItem : ScriptableObject
     public Sprite itemImage;
     public GameObject live2DModel;
     public float live2DShowDuration = 1.0f;
+    public bool isGameClearItem = false;
 }

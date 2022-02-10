@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Video;
+using UnityEngine.UI;
 using Live2D.Cubism.Rendering;
 
 [System.Serializable]
@@ -22,6 +22,7 @@ public enum GachaState
 
 public class GachaManager : MonoBehaviour
 {
+    public GachaItem tenjoItem;
     public List<GachaWeight> gachaList;
 
     public GachaResultUI resultUI;
@@ -31,6 +32,8 @@ public class GachaManager : MonoBehaviour
     public CubismRenderController gachaRenderController;
     public GameObject gachaHomeUIObject;
     public GameObject skipButton;
+    public GameObject retryButton;
+    public GameObject backButton;
 
     public Animator gachaAnimAnimator;
     public float gachaAnimationTime = 1.0f;
@@ -140,6 +143,7 @@ public class GachaManager : MonoBehaviour
             gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(true);
             skipButton.SetActive(false);
+            backButton.SetActive(true);
         }
         else if(state == GachaState.FINISH)
         {
@@ -147,6 +151,15 @@ public class GachaManager : MonoBehaviour
             gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(false);
             skipButton.SetActive(false);
+            backButton.SetActive(true);
+
+            if (GameClearManager.instance.IsGameClear())
+            {
+                // クリア条件を満たしたらリトライできなくなる
+                retryButton.SetActive(false);
+            }
+
+            TenjoManager.instance.UpdateUI();
         }
         else if(state == GachaState.WAIT)
         {
@@ -155,6 +168,7 @@ public class GachaManager : MonoBehaviour
             gachaHomeUIObject.SetActive(false);
             gachaAnimAnimator.SetBool("Start", false);
             skipButton.SetActive(false);
+            backButton.SetActive(false);
         }
         else if(state == GachaState.START)
         {
@@ -162,6 +176,7 @@ public class GachaManager : MonoBehaviour
             gachaRenderController.Opacity = 1f;
             gachaHomeUIObject.SetActive(false);
             skipButton.SetActive(false);
+            backButton.SetActive(false);
 
             animationTime = gachaAnimationTime;
             gachaAnimAnimator.SetBool("Start", true);
@@ -173,6 +188,7 @@ public class GachaManager : MonoBehaviour
             gachaHomeUIObject.SetActive(false);
             gachaAnimAnimator.SetBool("Start", false);
             skipButton.SetActive(true);
+            backButton.SetActive(false);
         }
     }
 
@@ -214,6 +230,10 @@ public class GachaManager : MonoBehaviour
 
         foreach (GachaItem item in results)
         {
+            if (item.isGameClearItem)
+            {
+                GameClearManager.instance.SetGameClear(true);
+            }
             gachaResultAnimation.AddGachaItem(item);
         }
     }
@@ -234,7 +254,14 @@ public class GachaManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
+            DataManager.AddGachaCount(1);
             GachaItem result = gacha.GetResult();
+
+            if(TenjoManager.instance.CheckTenjo())
+            {
+                // ガチャ天井アイテム
+                result = tenjoItem;
+            }
             gachaResults.Add(result);
         }
 

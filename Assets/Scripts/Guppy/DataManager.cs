@@ -5,6 +5,7 @@ using UnityEngine;
 public class DataManager
 {
     protected static int currentGachaPoint;
+    protected static int currentGachaCount;
 
     public static void SetPoint(int point)
     {
@@ -31,5 +32,20 @@ public class DataManager
     public static int GetPoint()
     {
         return currentGachaPoint;
+    }
+
+    public static void SetGachaCount(int count)
+    {
+        currentGachaCount = count;
+    }
+
+    public static void AddGachaCount(int count)
+    {
+        currentGachaCount += count;
+    }
+
+    public static int GetGachaCount()
+    {
+        return currentGachaCount;
     }
 }
