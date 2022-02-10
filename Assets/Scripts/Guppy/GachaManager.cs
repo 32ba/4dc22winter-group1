@@ -4,13 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Live2D.Cubism.Rendering;
 
-[System.Serializable]
-public class GachaWeight
-{
-    public GachaItem item;
-    public int weight;
-}
-
 public enum GachaState
 {
     HOME,
@@ -22,8 +15,11 @@ public enum GachaState
 
 public class GachaManager : MonoBehaviour
 {
-    public GachaItem tenjoItem;
-    public List<GachaWeight> gachaList;
+    public GachaParams gachaParameter;
+    // public GachaItem tenjoItem;
+    // public int requirePoint = 1000;
+
+    // public List<GachaWeight> gachaList;
 
     public GachaResultUI resultUI;
     public GachaAnimation gachaResultAnimation;
@@ -34,6 +30,8 @@ public class GachaManager : MonoBehaviour
     public GameObject skipButton;
     public GameObject retryButton;
     public GameObject backButton;
+    public Text startGachaButtonText;
+    public Text retryGachaButtonText;
 
     public Animator gachaAnimAnimator;
     public float gachaAnimationTime = 1.0f;
@@ -54,7 +52,7 @@ public class GachaManager : MonoBehaviour
         gachaState = GachaState.HOME;
         gachaResults = new List<GachaItem>();
 
-        foreach (GachaWeight weightData in gachaList)
+        foreach (GachaWeight weightData in gachaParameter.gachaData)
         {
             gacha.RegisterItem(weightData.item, weightData.weight);
         }
@@ -144,6 +142,8 @@ public class GachaManager : MonoBehaviour
             gachaHomeUIObject.SetActive(true);
             skipButton.SetActive(false);
             backButton.SetActive(true);
+
+            startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
         }
         else if(state == GachaState.FINISH)
         {
@@ -152,6 +152,8 @@ public class GachaManager : MonoBehaviour
             gachaHomeUIObject.SetActive(false);
             skipButton.SetActive(false);
             backButton.SetActive(true);
+
+            startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
 
             if (GameClearManager.instance.IsGameClear())
             {
@@ -212,6 +214,14 @@ public class GachaManager : MonoBehaviour
 
     public void StartGacha(int count)
     {
+        if(!gachaParameter.CanPlay(DataManager.GetPoint()))
+        {
+            Debug.Log("ポイントが足りません");
+
+            return;
+        }
+        DataManager.UsePoint(gachaParameter.requirePoint);
+
         List<GachaItem> results = DoGacha(count);
         SetUpGachaResult(results);
 
@@ -260,7 +270,7 @@ public class GachaManager : MonoBehaviour
             if(TenjoManager.instance.CheckTenjo())
             {
                 // ガチャ天井アイテム
-                result = tenjoItem;
+                result = gachaParameter.tenjouItem;
             }
             gachaResults.Add(result);
         }

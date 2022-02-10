@@ -64,6 +64,7 @@ public class QuizManager : MonoBehaviour
             correctTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
             //ToDo:正解したらポイントを付与する
+            DataManager.AddPoint(500);
         }
         else
         {
