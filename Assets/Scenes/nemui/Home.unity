@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 959492125}
   - component: {fileID: 959492124}
   - component: {fileID: 959492123}
+  - component: {fileID: 959492126}
   m_Layer: 5
   m_Name: Canvas_Home
   m_TagString: Untagged
@@ -413,8 +414,8 @@ Canvas:
   m_GameObject: {fileID: 959492121}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1896218214}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -425,6 +426,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &959492126
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959492121}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1237423396
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6a6a2cca940b141b6361f6c1f23e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 959492126}
   gachaButton: {fileID: 586960854}
   quizButton: {fileID: 1519345464}
 --- !u!4 &1602193130

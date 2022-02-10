@@ -24,7 +24,7 @@ public class TitleController : MonoBehaviour
                        .Subscribe(_ => {
                            OnClickGameStartButton().Forget();
                        })
-                       .AddTo(gameStartButton);
+                       .AddTo(this);
 
         creditButton = creditButton.GetComponent<Button>();
         creditButton.OnClickAsObservable()
@@ -32,7 +32,7 @@ public class TitleController : MonoBehaviour
                        .Subscribe(_ => {
                            OnClickCreditButton().Forget();
                        })
-                       .AddTo(gameStartButton);
+                       .AddTo(this);
     }
     
     /// <summary>

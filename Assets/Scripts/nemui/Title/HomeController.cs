@@ -1,30 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using UniRx;
 
 public class HomeController : MonoBehaviour
 {
+    [SerializeField] CanvasGroup canvasGroup = default;
     [SerializeField] private Button gachaButton = default;
     [SerializeField] private Button quizButton = default;
+    private float fadeInTime = 0.3f;
+    private float fadeOutTime = 0.3f;
 
-    private void Start()
+    private async void Start()
     {
+        await FadeManager.FadeIn(canvasGroup, fadeInTime);
+
+        canvasGroup = canvasGroup.GetComponent<CanvasGroup>();
+
         gachaButton = gachaButton.GetComponent<Button>();
-        gachaButton.onClick.AddListener(OnClickGachaButton);
+        gachaButton.OnClickAsObservable()
+                       .First()
+                       .Subscribe(_ => {
+                           OnClickGachaButton().Forget();
+                       })
+                       .AddTo(this);
 
         quizButton = quizButton.GetComponent<Button>();
-        quizButton.onClick.AddListener(OnClickQuizButton);
+        quizButton.OnClickAsObservable()
+                       .First()
+                       .Subscribe(_ => {
+                           OnClickQuizButton().Forget();
+                       })
+                       .AddTo(this);
     }
     
-    private void OnClickGachaButton()
+    /// <summary>
+    /// Gachaボタンを押した時にガチャ画面へ遷移させるクラス
+    /// </summary>
+    /// <returns></returns>
+    private async UniTaskVoid OnClickGachaButton()
     {
+        await FadeManager.FadeOut(canvasGroup, fadeOutTime);
         SceneManager.LoadScene("PlayGachaAndResult");
     }
 
-    private void OnClickQuizButton()
+    /// <summary>
+    /// Quizボタンを押した時にクイズ画面へ遷移させるクラス
+    /// </summary>
+    /// <returns></returns>
+    private async UniTaskVoid OnClickQuizButton()
     {
+        await FadeManager.FadeOut(canvasGroup, fadeOutTime);
         SceneManager.LoadScene("quiz");
     }
 }
+
