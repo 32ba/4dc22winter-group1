@@ -8,7 +8,7 @@ public class GachaKakuritsuOverlayController : MonoBehaviour
     public GameObject gachaKakuritsuImageObject;
     private void OnEnable()
     {
-        gachaKakuritsuImageObject.transform.position = Vector3.zero;
+        gachaKakuritsuImageObject.transform.position = new Vector3(850f,0,0);
     }
 
     public void OnClickCloseButton()
