@@ -18,7 +18,7 @@ public class TenjoManager : MonoBehaviour
         instance = this;
     }
 
-    public int tenjoCount = 200;
+    public GachaParams gachaParameter;
     public Text tenjoText;
 
     private bool tenjoFlag = false;
@@ -31,15 +31,15 @@ public class TenjoManager : MonoBehaviour
         }
         else
         {
-            tenjoText.text = $"あと{tenjoCount - DataManager.GetGachaCount()}回でSSSR確定！！！";
+            tenjoText.text = $"あと{gachaParameter.tenjou - DataManager.GetGachaCount()}回でSSSR確定！！！";
         }
     }
 
     public bool CheckTenjo()
     {
-        if(DataManager.GetGachaCount() >= tenjoCount)
+        if(DataManager.GetGachaCount() >= gachaParameter.tenjou)
         {
-            DataManager.AddGachaCount(-tenjoCount);
+            DataManager.AddGachaCount(-gachaParameter.tenjou);
             tenjoFlag = true;
             
             return true;
