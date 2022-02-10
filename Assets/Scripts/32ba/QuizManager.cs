@@ -81,7 +81,7 @@ public class QuizManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "home":
-                //ToDo:ホーム画面のシーンへ遷移する処理
+                SceneManager.LoadScene("Home");
                 break;
         }
     }
