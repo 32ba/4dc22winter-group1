@@ -9,7 +9,7 @@ using _32ba;
 
 public class QuizManager : MonoBehaviour
 {
-    public TextAsset questionCsv;
+    public TextAsset questionFile;
     public GameObject choicesA;
     public GameObject choicesB;
     public GameObject choicesC;
@@ -25,7 +25,7 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool isQuestionCsvLoaded = CsvReader.Read(questionCsv, _questionData);
+        bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	');
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
         _questionId = UnityEngine.Random.Range(0, _questionData.Count);
         SetQuestion(_questionData, _questionId);
