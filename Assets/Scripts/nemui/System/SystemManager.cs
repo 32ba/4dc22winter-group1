@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class SystemManager : MonoBehaviour
 {
-    private static GameManager instance;
+    private static SystemManager instance;
  
     // シングルトンにする
-    public static GameManager Instance
+    public static SystemManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = (GameManager)FindObjectOfType(typeof(GameManager));
+                instance = (SystemManager)FindObjectOfType(typeof(SystemManager));
  
                 if (instance == null)
                 {
-                    Debug.LogError(typeof(GameManager) + "をアタッチしているGameObjectはありません");
+                    Debug.LogError(typeof(SystemManager) + "をアタッチしているGameObjectはありません");
                 }
             }
  
