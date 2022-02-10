@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GachaBackButton : MonoBehaviour
 {
@@ -31,5 +32,6 @@ public class GachaBackButton : MonoBehaviour
     void BackToMenu()
     {
         // ƒƒjƒ…[‚É–ß‚éˆ—
+        SceneManager.LoadScene("Home");
     }
 }
