@@ -17,6 +17,15 @@ public class TextWritterEnding : MonoBehaviour
         while (!uitext.IsClicked()) yield return 0;
     }
 
+    IEnumerator Title()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("タイトルへ");
+        }
+        yield return 0;
+    }
+
     // 文章を表示させるコルーチン
     IEnumerator Cotest()
     {
@@ -77,6 +86,6 @@ public class TextWritterEnding : MonoBehaviour
 
         uitext.DrawText("依頼主と探偵は、かき集めた軍資金を頼りに怪しい魚屋の闇を暴くことにした。");
         yield return StartCoroutine("Skip");
-
+        yield return StartCoroutine("Title");
     }
 }
