@@ -34,46 +34,54 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	');
+        bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	');//テキストファイルから問題をリストへ読み込み
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
-        _questionId = UnityEngine.Random.Range(0, _questionData.Count);
-        SetQuestion(_questionData, _questionId);
+        _questionId = UnityEngine.Random.Range(0, _questionData.Count);//何問目を出題するかを決める
+        SetQuestion(_questionData, _questionId);//問題文、回答を各テキストフィールドへ反映
         DelayAsync(1.0f, () => {
             choicesA.SetActive(true);
             choicesB.SetActive(true);
             choicesC.SetActive(true);
             choicesD.SetActive(true);
-            timeLimitBarObject.SetActive(true);
-            _isEnableTimer = true;
+            timeLimitBarObject.SetActive(true);//回答ボタンとタイムリミットを表示するバーを表示
+            _isEnableTimer = true;//タイマー有効化
         }).Forget();
     }
 
     private void Update()
     {
-        if (_isEnableTimer)TimeLimitCounter(5.0f);
+        if (_isEnableTimer)TimeLimitCounter(5.0f);//タイマーが有効な間、タイマーを実行
     }
 
+    /// <summary>
+    /// 回答ボタンを押した時に呼ばれる関数
+    /// </summary>
+    /// <param name="answer">押されたボタンに対応するキー</param>
     public void OnClickAnswerButton(string answer)
     {
-        if (_isAlreadyAnswered) return;
+        if (_isAlreadyAnswered) return;//すでに回答済みなら、その後はボタンを反応させないようにする
         _isAlreadyAnswered = true;
         _isEnableTimer = false;
-        DelayAsync(1.0f, () => {afterAnsweringPanelObject.SetActive(true);}).Forget();
+        DelayAsync(1.0f, () => {afterAnsweringPanelObject.SetActive(true);}).Forget(); //次へ進むボタンを表示
         if (AnswerQuestion(_questionData, _questionId, answer))
         {
+            //正解なら正しい答えをハイライトし、丸の記号を出し、ポイントを加算
             correctTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
-            //ToDo:正解したらポイントを付与する
             DataManager.AddPoint(500);
         }
         else
         {
-            //ToDo:不正解なら正しい答えをハイライトして次へすすむ
+            //不正解なら正しい答えをハイライトし、バツマークを出す
             incorrectTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
         }
     }
 
+    /// <summary>
+    /// クイズ回答後に出てくるボタンを制御する関数
+    /// </summary>
+    /// <param name="mode">押されたボタンのモード</param>
     public void OnClickUIButton(string mode)
     {
         switch (mode)
@@ -87,6 +95,11 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 問題を読み込み、各テキストフィールドに文章を反映させるクラス
+    /// </summary>
+    /// <param name="data">問題データ</param>
+    /// <param name="id">問題番号</param>
     private void SetQuestion(List<string[]> data, int id)
     {
         questionText.text = _questionData[id][0];
@@ -96,6 +109,13 @@ public class QuizManager : MonoBehaviour
         choicesD.GetComponentInChildren<Text>().text = data[id][4];
     }
     
+    /// <summary>
+    /// クイズに答えて、それが正解か不正解かをboolで返す関数
+    /// </summary>
+    /// <param name="data">問題データ</param>
+    /// <param name="id">問題番号</param>
+    /// <param name="answer">回答</param>
+    /// <returns></returns>
     private bool AnswerQuestion(List<string[]> data, int id, string answer)
     {
         var isCorrect = ((data[id][5] == answer || data[id][5] == "X") && answer != "TimeOut");
@@ -103,6 +123,11 @@ public class QuizManager : MonoBehaviour
         return isCorrect;
     }
 
+    /// <summary>
+    /// 正しい選択肢のボタンをハイライトするクラス
+    /// </summary>
+    /// <param name="data">クイズデータ</param>
+    /// <param name="id">問題番号</param>
     private void HighlightCorrectAnswer(List<string[]> data, int id)
     {
         var choicesAButton = choicesA.GetComponent<Button>();
@@ -138,6 +163,10 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// タイマーとタイムリミットを表示するバーの制御をするクラス
+    /// </summary>
+    /// <param name="seconds">タイマーの秒数を指定</param>
     private void TimeLimitCounter(float seconds)
     {
         _countTime += Time.deltaTime;
@@ -145,6 +174,11 @@ public class QuizManager : MonoBehaviour
         timeBarImage.fillAmount = _progress;
         if(_progress >= 1f)OnClickAnswerButton("TimeOut");
     }
+    /// <summary>
+    /// 指定された秒数後に任意のアクションを実行するクラス
+    /// </summary>
+    /// <param name="seconds">待つ秒数</param>
+    /// <param name="callback">実行したい任意のアクション</param>
     private async UniTask DelayAsync(float seconds, UnityAction callback)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(seconds));

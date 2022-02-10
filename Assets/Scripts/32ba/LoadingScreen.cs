@@ -25,6 +25,9 @@ public class LoadingScreen : MonoBehaviour
         rotateImageObject.transform.rotation =  Quaternion.identity;
     }
 
+    /// <summary>
+    /// テキストを動かす関数
+    /// </summary>
     private void TextController()
     {
         _text += ".";
@@ -36,7 +39,10 @@ public class LoadingScreen : MonoBehaviour
         }
         loadingText.text = _text;
     }
-
+    
+    /// <summary>
+    /// 画像を回す関数
+    /// </summary>
     private void RotateImage()
     {
         rotateImageObject.transform.Rotate(0,0,-2f);
