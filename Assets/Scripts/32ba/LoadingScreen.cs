@@ -18,6 +18,13 @@ public class LoadingScreen : MonoBehaviour
         //ToDo:横にサンマが跳ねてるLive2Dを入れたら見栄えが良さそう
     }
 
+    private void OnDisable()
+    {
+        _text = "Loading";
+        loadingText.text = _text;
+        rotateImageObject.transform.rotation =  Quaternion.identity;
+    }
+
     private void TextController()
     {
         _text += ".";
