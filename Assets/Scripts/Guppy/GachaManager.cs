@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 [System.Serializable]
 public class GachaWeight
 {
     public GachaItem item;
     public int weight;
+}
+
+public enum GachaState
+{
+    IDLE,
+    START,
+    SHOW_RESULT,
 }
 
 public class GachaManager : MonoBehaviour
@@ -16,87 +24,132 @@ public class GachaManager : MonoBehaviour
     public GachaResultUI resultUI;
     public GachaAnimation gachaAnimator;
 
-    public GameObject gachaResult;
+    public GameObject gachaResultUIObject;
+    public GameObject gachaVideoObject;
 
-    private Dictionary<GachaItem, int> gachaWeights;
-    private int gachaAllWeight;
-    private List<GachaItem> results;
+    public VideoPlayer gachaVideoPlayer;
+
+    private Gacha gacha;
+    private GachaState gachaState;
+
+    private bool doSkip = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        results = new List<GachaItem>();
-        gachaWeights = new Dictionary<GachaItem, int>();
-        gachaAllWeight = 0;
+        gacha = new Gacha();
+
+        gachaState = GachaState.IDLE;
 
         foreach (GachaWeight weightData in gachaList)
         {
-            gachaWeights[weightData.item] = weightData.weight;
-            gachaAllWeight += weightData.weight;
+            gacha.RegisterItem(weightData.item, weightData.weight);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gachaAnimator.IsAnimPlaying())
+        gachaState = UpdateAnimation(gachaState);
+
+        UpdateUI(gachaState);
+        UpdateInput(gachaState);
+    }
+
+    /*
+     * ガチャアニメを一括して更新する
+     * アニメステートに変更があればその値を返す
+     */
+    private GachaState UpdateAnimation(GachaState state)
+    {
+        GachaState newState = state;
+
+        if(state == GachaState.START)
         {
-            gachaResult.SetActive(false);
-            if (Input.GetMouseButtonDown(0))
+            if (gachaVideoPlayer.isPlaying == false)
             {
-                gachaAnimator.NextGachaItem();
+                newState = GachaState.SHOW_RESULT;
             }
         }
-        else
+        else if(state == GachaState.SHOW_RESULT)
         {
-            gachaResult.SetActive(true);
+            if (!gachaAnimator.IsAnimPlaying() || doSkip)
+            {
+                doSkip = false;
+                if (gachaAnimator.HasNext())
+                {
+                    gachaAnimator.Next();
+                }
+                else
+                {
+                    gachaAnimator.FinishAnimation();
+                    newState = GachaState.IDLE;
+                }
+            }
+        }
+
+        return newState;
+    }
+
+    private void UpdateUI(GachaState state)
+    {
+        if(state == GachaState.IDLE)
+        {
+            gachaResultUIObject.SetActive(true);
+            gachaVideoObject.SetActive(false);
+        }
+        else if(state == GachaState.START)
+        {
+            gachaResultUIObject.SetActive(false);
+            gachaVideoObject.SetActive(true);
+        }
+        else if(state == GachaState.SHOW_RESULT)
+        {
+            gachaResultUIObject.SetActive(false);
+            gachaVideoObject.SetActive(false);
+        }
+    }
+
+    private void UpdateInput(GachaState state)
+    {
+        if(state == GachaState.SHOW_RESULT)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                doSkip = true;
+            }
         }
     }
 
     public void StartGacha(int count)
     {
-        /*
-        if(DataManager.UsePoint(1000 * count) == false)
-        {
-            Debug.Log("ポイントが足りません！");
-            return;
-        }
-        Debug.Log(DataManager.GetPoint());
-        */
+        List<GachaItem> results = DoGacha(count);
+        SetUpGachaResult(results);
 
-        results.Clear();
+        gachaState = GachaState.START;
+        gachaVideoPlayer.Play();
+    }
 
-        for(int i = 0; i < count; i++)
-        {
-            GachaItem result = GetGachaResult();
-            results.Add(result);
-        }
-
-        resultUI.ShowResult(results);
-
-        foreach(GachaItem item in results)
+    private void SetUpGachaResult(List<GachaItem> results)
+    {
+        foreach (GachaItem item in results)
         {
             gachaAnimator.AddGachaItem(item);
         }
 
-        gachaAnimator.StartAnimation();
+        resultUI.ShowResult(results);
     }
 
-    public GachaItem GetGachaResult()
+    private List<GachaItem> DoGacha(int count)
     {
-        int randomResult = Random.Range(0, gachaAllWeight);
+        List<GachaItem> gachaResults = new List<GachaItem>();
 
-        foreach(KeyValuePair<GachaItem, int> elem in gachaWeights)
+        for (int i = 0; i < count; i++)
         {
-            if(randomResult < elem.Value)
-            {
-                return elem.Key;
-            }
-            else
-            {
-                randomResult -= elem.Value;
-            }
+            GachaItem result = gacha.GetResult();
+            gachaResults.Add(result);
         }
-        return null;
+
+        return gachaResults;
     }
 }

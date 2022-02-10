@@ -26,7 +26,7 @@ public class GachaAnimation : MonoBehaviour
         {
             if(animDuration <= 0.0f)
             {
-                NextGachaItem();
+                gachaAnimPlaying = false;
             }
             animDuration -= Time.deltaTime;
         }
@@ -37,30 +37,35 @@ public class GachaAnimation : MonoBehaviour
         gachaResults.Enqueue(item);
     }
 
-    public void StartAnimation()
+    public void Next()
     {
-        gachaAnimPlaying = true;
-        NextGachaItem();
-    }
-
-    public void NextGachaItem()
-    {
-        if(gachaResults.Count > 0)
+        if(HasNext())
         {
+            gachaAnimPlaying = true;
             currentGachaItem = gachaResults.Dequeue();
             animDuration = currentGachaItem.live2DShowDuration;
             SetLive2DObject(currentGachaItem.live2DModel);
         }
         else
         {
-            gachaAnimPlaying = false;
-            ClearLive2DObject();
+            FinishAnimation();
         }
+    }
+
+    public void FinishAnimation()
+    {
+        gachaAnimPlaying = false;
+        ClearLive2DObject();
     }
 
     public bool IsAnimPlaying()
     {
         return gachaAnimPlaying;
+    }
+
+    public bool HasNext()
+    {
+        return gachaResults.Count > 0;
     }
 
     private void SetLive2DObject(GameObject live2DObject)
