@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/nemui/Credit.unity
     guid: 071388eb2bafe3e42a0215b666052fb6
+  - enabled: 1
+    path: Assets/Scenes/nemui/Home.unity
+    guid: 0eb63dbec73f82d478f94ad8feade34e
+  - enabled: 1
+    path: Assets/Scenes/32ba/quiz.unity
+    guid: 93255229e7af9104e9c7eabb8a04061a
+  - enabled: 1
+    path: Assets/Scenes/Guppy/PlayGachaAndResult.unity
+    guid: c628fa767c7f7f64d896e0a09b2e74af
   m_configObjects: {}
