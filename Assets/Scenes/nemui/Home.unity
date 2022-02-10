@@ -722,7 +722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1602193130}
-  - component: {fileID: 1602193129}
+  - component: {fileID: 1602193131}
   m_Layer: 0
   m_Name: HomeController
   m_TagString: Untagged
@@ -730,21 +730,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1602193129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602193128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f6a6a2cca940b141b6361f6c1f23e11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 959492126}
-  gachaButton: {fileID: 586960854}
-  quizButton: {fileID: 1519345464}
 --- !u!4 &1602193130
 Transform:
   m_ObjectHideFlags: 0
@@ -759,6 +744,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1602193131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602193128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de83bf60f42cce540936c329d726c2aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 959492126}
+  sceneTransitionButtons:
+  - {fileID: 586960854}
+  - {fileID: 1519345464}
+  sceneName:
+  - PlayGachaAndResult
+  - quiz
 --- !u!1 &1807820283
 GameObject:
   m_ObjectHideFlags: 0

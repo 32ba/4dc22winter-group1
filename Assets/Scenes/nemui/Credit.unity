@@ -1636,7 +1636,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 467934823}
-  backTitleButton: {fileID: 481439732}
+  sceneTransitionButtons:
+  - {fileID: 481439732}
+  sceneName:
+  - Title
+  fadeInTime: 0.3
+  fadeOutTime: 0.3
 --- !u!4 &1971494637
 Transform:
   m_ObjectHideFlags: 0

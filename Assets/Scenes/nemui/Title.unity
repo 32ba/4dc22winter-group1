@@ -391,9 +391,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 648824034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c47f917a27eb25b4bab493ab9923aab3, type: 3}
+  m_Script: {fileID: 11500000, guid: de83bf60f42cce540936c329d726c2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 1091594752}
+  sceneTransitionButtons:
+  - {fileID: 1688516775}
+  - {fileID: 64077442}
+  sceneName:
+  - tutorial
+  - Credit
+  fadeInTime: 0.3
+  fadeOutTime: 0.3
 --- !u!4 &648824036
 Transform:
   m_ObjectHideFlags: 0
