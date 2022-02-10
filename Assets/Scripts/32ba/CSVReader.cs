@@ -8,7 +8,7 @@ namespace _32ba
 {
     public class CsvReader
     {
-        public static bool Read(TextAsset csvFile, List<string[]> list)
+        public static bool Read(TextAsset csvFile, List<string[]> list, char separator)
         {
             try
             {
@@ -16,7 +16,8 @@ namespace _32ba
                 while (reader.Peek() != -1)
                 {
                     string line = reader.ReadLine();
-                    list.Add(line.Split(','));
+                    if (line.Contains("\\n")) line = line.Replace(@"\n", Environment.NewLine);
+                    list.Add(line.Split(separator));
                 }
             }
             catch (FileNotFoundException e)
