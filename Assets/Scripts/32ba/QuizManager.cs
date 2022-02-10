@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using _32ba;
+using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class QuizManager : MonoBehaviour
     public GameObject choicesD;
     public GameObject correctTextObject;
     public GameObject incorrectTextObject;
+    public GameObject afterAnsweringPanel;
     public Text questionText;
 
     private readonly List<string[]> _questionData = new List<string[]>();
@@ -37,10 +39,11 @@ public class QuizManager : MonoBehaviour
         }).Forget();
     }
 
-    public void OnClick(string answer)
+    public void OnClickAnswerButton(string answer)
     {
         if (_isAlreadyAnswered) return;
         _isAlreadyAnswered = true;
+        DelayAsync(1.0f, () => {afterAnsweringPanel.SetActive(true);}).Forget();
         if (AnswerQuestion(_questionData, _questionId, answer))
         {
             correctTextObject.SetActive(true);
@@ -53,7 +56,19 @@ public class QuizManager : MonoBehaviour
             incorrectTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
         }
+    }
 
+    public void OnClickUIButton(string mode)
+    {
+        switch (mode)
+        {
+            case "next":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                break;
+            case "home":
+                //ToDo:ホーム画面のシーンへ遷移する処理
+                break;
+        }
     }
 
     private void SetQuestion(List<string[]> data, int id)
