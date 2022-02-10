@@ -5,6 +5,7 @@ using UnityEngine;
 public class TextWriterTuterial : MonoBehaviour
 {
     public Uitext uitext;
+    public ImageChange change;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class TextWriterTuterial : MonoBehaviour
         }
         yield return 0;
     }
+
 
     // 文章を表示させるコルーチン
     IEnumerator Cotest()
@@ -51,6 +53,7 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "住人の話しによると、その店では新鮮な海の魚も売っているとのことなんですが、どうにも抽選機を回して出た色で買える魚が変わるという話で。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSmile();
         uitext.DrawText("探偵", "ほうほう、それで");
         yield return StartCoroutine("Skip");
 
@@ -66,18 +69,21 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "そこで探偵さんには、本当に新鮮な海の魚を仕入れているのかそのお店を調査してもらいたくて・・・");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSad();
         uitext.DrawText("探偵", "・・・");
         yield return StartCoroutine("Skip");
 
         uitext.DrawText("部屋に一瞬の静寂が訪れる。探偵は少し考える素振りをし、口を開いた。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSmile();
         uitext.DrawText("探偵", "分かりました。しかし、かなりの費用はかかると思います。");
         yield return StartCoroutine("Skip");
 
         uitext.DrawText("この宿場町は海からかなり離れており、新鮮な魚を運んでくるには相応の費用が掛かることは想像がつく。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSad();
         uitext.DrawText("しかし、話題に挙がった魚屋で本当に海の魚を仕入れているのかは分からない。");
         yield return StartCoroutine("Skip");
 
