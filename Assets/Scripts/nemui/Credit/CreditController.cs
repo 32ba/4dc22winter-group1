@@ -26,6 +26,10 @@ public class CreditController : MonoBehaviour
                        .AddTo(backTitleButton);
     }
     
+    /// <summary>
+    /// BackTitleボタンを押した時にタイトル画面へ遷移させるクラス
+    /// </summary>
+    /// <returns></returns>
     private async UniTaskVoid OnClickBackTitleButton()
     {
         await FadeManager.FadeOut(canvasGroup, fadeOutTime);

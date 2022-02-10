@@ -36,7 +36,7 @@ public class TitleController : MonoBehaviour
     }
     
     /// <summary>
-    /// GameStartボタンを押した時にチュートリアル画面へ遷移させる
+    /// GameStartボタンを押した時にチュートリアル画面へ遷移させるクラス
     /// </summary>
     /// <returns></returns>
     private async UniTaskVoid OnClickGameStartButton()
@@ -46,7 +46,7 @@ public class TitleController : MonoBehaviour
     }
 
     /// <summary>
-    /// Creditボタンを押した時にクレジット画面へ遷移させる
+    /// Creditボタンを押した時にクレジット画面へ遷移させるクラス
     /// </summary>
     /// <returns></returns>
     private async UniTaskVoid OnClickCreditButton()
