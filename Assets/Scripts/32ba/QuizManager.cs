@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using Cysharp.Threading.Tasks;
-using _32ba;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
+using UniRx;
+using _32ba;
+
 
 public class QuizManager : MonoBehaviour
 {
@@ -17,12 +19,17 @@ public class QuizManager : MonoBehaviour
     public GameObject choicesD;
     public GameObject correctTextObject;
     public GameObject incorrectTextObject;
-    public GameObject afterAnsweringPanel;
+    public GameObject afterAnsweringPanelObject;
+    public GameObject timeLimitBarObject;
+    public Image timeBarImage;
     public Text questionText;
 
     private readonly List<string[]> _questionData = new List<string[]>();
     private int _questionId;
     private bool _isAlreadyAnswered = false;
+    private bool _isStartTimer = false;
+    private float _countTime = 0;
+    private float _progress = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -36,14 +43,21 @@ public class QuizManager : MonoBehaviour
             choicesB.SetActive(true);
             choicesC.SetActive(true);
             choicesD.SetActive(true);
+            timeLimitBarObject.SetActive(true);
+            _isStartTimer = true;
         }).Forget();
+    }
+
+    private void Update()
+    {
+        if (_isStartTimer)TimeLimitCounter(5.0f);
     }
 
     public void OnClickAnswerButton(string answer)
     {
         if (_isAlreadyAnswered) return;
         _isAlreadyAnswered = true;
-        DelayAsync(1.0f, () => {afterAnsweringPanel.SetActive(true);}).Forget();
+        DelayAsync(1.0f, () => {afterAnsweringPanelObject.SetActive(true);}).Forget();
         if (AnswerQuestion(_questionData, _questionId, answer))
         {
             correctTextObject.SetActive(true);
@@ -82,7 +96,7 @@ public class QuizManager : MonoBehaviour
     
     private bool AnswerQuestion(List<string[]> data, int id, string answer)
     {
-        var isCorrect = (data[id][5] == answer || data[id][5] == "X");
+        var isCorrect = ((data[id][5] == answer || data[id][5] == "X") && answer != "TimeOut");
         Debug.Log(isCorrect ? "正解" : "不正解");
         return isCorrect;
     }
@@ -120,6 +134,14 @@ public class QuizManager : MonoBehaviour
                 choicesDButton.interactable = true;
                 break;
         }
+    }
+
+    private void TimeLimitCounter(float seconds)
+    {
+        _countTime += Time.deltaTime;
+        _progress = _countTime / seconds;
+        timeBarImage.fillAmount = _progress;
+        if(_progress >= 1f)OnClickAnswerButton("TimeOut");
     }
     private async UniTask DelayAsync(float seconds, UnityAction callback)
     {
