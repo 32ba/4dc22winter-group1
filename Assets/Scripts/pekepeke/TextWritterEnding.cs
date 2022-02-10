@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TextWritterEnding : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class TextWritterEnding : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("ÉzÅ[ÉÄÇ÷");
+            SceneManager.LoadScene("Home");
         }
         yield return 0;
     }

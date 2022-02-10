@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameClearManager : MonoBehaviour
 {
@@ -37,11 +38,13 @@ public class GameClearManager : MonoBehaviour
         {
             Debug.Log("ExtraEND!!!");
             // 裏エンドに移動
+            SceneManager.LoadScene("uraend");
         }
         else
         {
             Debug.Log("NormalEND!!!");
             // 通常エンドに移動
+            SceneManager.LoadScene("ending");
         }
     }
 }
