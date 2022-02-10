@@ -68,6 +68,11 @@ public class GachaAnimation : MonoBehaviour
         return gachaResults.Count > 0;
     }
 
+    public void SkipAll()
+    {
+        gachaResults.Clear();
+    }
+
     private void SetLive2DObject(GameObject live2DObject)
     {
         if (currentLive2DObject)

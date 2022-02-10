@@ -30,6 +30,7 @@ public class GachaManager : MonoBehaviour
     public GameObject gachaResultUIObject;
     public CubismRenderController gachaRenderController;
     public GameObject gachaHomeUIObject;
+    public GameObject skipButton;
 
     public Animator gachaAnimAnimator;
     public float gachaAnimationTime = 1.0f;
@@ -138,12 +139,14 @@ public class GachaManager : MonoBehaviour
             gachaResultUIObject.SetActive(false);
             gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(true);
+            skipButton.SetActive(false);
         }
         else if(state == GachaState.FINISH)
         {
             gachaResultUIObject.SetActive(true);
             gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(false);
+            skipButton.SetActive(false);
         }
         else if(state == GachaState.WAIT)
         {
@@ -151,12 +154,14 @@ public class GachaManager : MonoBehaviour
             gachaRenderController.Opacity = 1f;
             gachaHomeUIObject.SetActive(false);
             gachaAnimAnimator.SetBool("Start", false);
+            skipButton.SetActive(false);
         }
         else if(state == GachaState.START)
         {
             gachaResultUIObject.SetActive(false);
             gachaRenderController.Opacity = 1f;
             gachaHomeUIObject.SetActive(false);
+            skipButton.SetActive(false);
 
             animationTime = gachaAnimationTime;
             gachaAnimAnimator.SetBool("Start", true);
@@ -167,6 +172,7 @@ public class GachaManager : MonoBehaviour
             gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(false);
             gachaAnimAnimator.SetBool("Start", false);
+            skipButton.SetActive(true);
         }
     }
 
@@ -194,6 +200,12 @@ public class GachaManager : MonoBehaviour
         SetUpGachaResult(results);
 
         ChangeState(GachaState.WAIT);
+    }
+
+    public void SkipGacha()
+    {
+        gachaResultAnimation.SkipAll();
+        ChangeState(GachaState.FINISH);
     }
 
     private void SetUpGachaResult(List<GachaItem> results)
