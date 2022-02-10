@@ -27,7 +27,7 @@ public class QuizManager : MonoBehaviour
     private readonly List<string[]> _questionData = new List<string[]>();
     private int _questionId;
     private bool _isAlreadyAnswered = false;
-    private bool _isStartTimer = false;
+    private bool _isEnableTimer = false;
     private float _countTime = 0;
     private float _progress = 0;
 
@@ -44,19 +44,20 @@ public class QuizManager : MonoBehaviour
             choicesC.SetActive(true);
             choicesD.SetActive(true);
             timeLimitBarObject.SetActive(true);
-            _isStartTimer = true;
+            _isEnableTimer = true;
         }).Forget();
     }
 
     private void Update()
     {
-        if (_isStartTimer)TimeLimitCounter(5.0f);
+        if (_isEnableTimer)TimeLimitCounter(5.0f);
     }
 
     public void OnClickAnswerButton(string answer)
     {
         if (_isAlreadyAnswered) return;
         _isAlreadyAnswered = true;
+        _isEnableTimer = false;
         DelayAsync(1.0f, () => {afterAnsweringPanelObject.SetActive(true);}).Forget();
         if (AnswerQuestion(_questionData, _questionId, answer))
         {
