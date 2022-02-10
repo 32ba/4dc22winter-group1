@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Magro
   m_EditorClassIdentifier: 
   itemName: "\u5927\u9593\u306E\u672C\u30DE\u30B0\u30ED"
-  itemImage: {fileID: 21300000, guid: 073c28f6ca2bd1c459bd281888b9d159, type: 3}
+  itemImage: {fileID: -341175184999333790, guid: 65ed2661dcb1236438d2c56650c87e09, type: 3}
   live2DModel: {fileID: 8715436474020648661, guid: e1d86ea4e1910944389eccad2a885ef4, type: 3}
   live2DShowDuration: 3.7
   isGameClearItem: 1
