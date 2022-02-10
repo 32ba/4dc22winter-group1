@@ -44,6 +44,7 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "実はですねぇ、今年の夏頃に町の北の方に新しく魚屋ができたんですが・・・");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSad();
         uitext.DrawText("探偵", "・・・");
         yield return StartCoroutine("Skip");
 
