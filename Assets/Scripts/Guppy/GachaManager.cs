@@ -17,6 +17,7 @@ public enum GachaState
 public class GachaManager : MonoBehaviour
 {
     public GachaParams gachaParameter;
+    public GachaParams tutorialGachaParameter;
     public GachaUIManager gachaUIManager;
     public GachaAnimation gachaResultAnimation;
     public GachaStartAnimation gachaStartAnimation;
@@ -42,7 +43,15 @@ public class GachaManager : MonoBehaviour
         gachaState = GachaState.HOME;
         gachaResults = new List<GachaItem>();
 
-        foreach (GachaWeight weightData in gachaParameter.gachaData)
+        List<GachaWeight> gachaData = gachaParameter.gachaData;
+
+        // チュートリアル専用のガチャ
+        if (DataManager.IsTutorialMode())
+        {
+            gachaData = tutorialGachaParameter.gachaData;
+        }
+
+        foreach (GachaWeight weightData in gachaData)
         {
             gacha.RegisterItem(weightData.item, weightData.weight);
         }

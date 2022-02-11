@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3629492d1b42c4343a4951001ca72889, type: 3}
   m_Name: TutorialGacha
   m_EditorClassIdentifier: 
-  requirePoint: 100
+  requirePoint: 1000
   tenjou: 50
   tenjouItem: {fileID: 11400000, guid: 5904e01ddcf334b4e9e5484605ccd44b, type: 2}
   gachaData:
