@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TextWriterTuterial : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class TextWriterTuterial : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("チュートリアルガチャへ");
+            SceneManager.LoadScene("PlayGachaAndResult");
         }
         yield return 0;
     }
