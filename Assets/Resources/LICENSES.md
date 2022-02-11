@@ -1,7 +1,9 @@
 --Noto Sans JP--
 
 本ソフトでは表示フォントに「Noto Sans JP」(https://fonts.google.com/noto/specimen/Noto+Sans+JP)を使用しています。
+
 Licensed under SIL Open Font License 1.1 (http://scripts.sil.org/OFL)
+
 Copyright 2014-2020 Adobe Systems Incorporated (https://www.adobe.com/)
 
 --UniTask--
