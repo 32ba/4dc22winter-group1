@@ -46,7 +46,7 @@ public class QuizManager : MonoBehaviour
         bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	'); //テキストファイルから問題をリストへ読み込み
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
         _questionId = UnityEngine.Random.Range(0, _questionData.Count); //何問目を出題するかを決める
-        DelayAsync(UnityEngine.Random.Range(0,0.5f), () =>
+        DelayAsync(UnityEngine.Random.Range(0,0.8f), () =>
         {
             loadingOverlayObject.SetActive(false);
             SetQuestion(_questionData, _questionId); //問題文、回答を各テキストフィールドへ反映
@@ -191,6 +191,11 @@ public class QuizManager : MonoBehaviour
         if(_progress >= 1f)OnClickAnswerButton(4);
     }
 
+    /// <summary>
+    /// オーディオ再生制御クラス
+    /// </summary>
+    /// <param name="i">quizAudioSourcesの何番目のクリップを再生するか</param>
+    /// <param name="play">再生を止める場合は”false”を渡す</param>
     private void AudioPlayer(int i, bool play = true)
     {
         if (play) quizAudioSource.PlayOneShot(quizAudioClips[i]);
