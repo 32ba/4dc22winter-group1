@@ -793,8 +793,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -275, y: -82}
-  m_SizeDelta: {x: 250, y: 150}
+  m_AnchoredPosition: {x: -249.03, y: -68.74}
+  m_SizeDelta: {x: 287.94, y: 122.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1593275764
 MonoBehaviour:
@@ -809,7 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12827814, g: 0.13785231, b: 0.21698111, a: 0.6666667}
+  m_Color: {r: 0.12827814, g: 0.13785231, b: 0.21698111, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -847,11 +847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenTouchArea: {fileID: 633822299}
-  characterDialogue:
-  - "\u3053\u3093\u306B\u3061\u306F"
-  - "\u3053\u3093\u3070\u3093\u306F"
-  - "\u304A\u306F\u3088\u3046\u3054\u3056\u3044\u307E\u3059"
-  - "\u304A\u3084\u3059\u307F\u306A\u3055\u3044"
+  dialogueTextAsset: {fileID: 4900000, guid: 606077adaa3ec5945ad4f50d5f208db0, type: 3}
 --- !u!1 &1602193128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1261,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -40}
+  m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064538299
 MonoBehaviour:
@@ -1289,10 +1285,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3f2679a87141e7f49b84f95386b66ec4, type: 3}
-    m_FontSize: 22
+    m_FontSize: 17
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 53
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1300,7 +1296,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042"
+  m_Text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042"
 --- !u!222 &2064538300
 CanvasRenderer:
   m_ObjectHideFlags: 0
