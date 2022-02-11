@@ -7,6 +7,7 @@ public class TextWriterSanmaIf : MonoBehaviour
 {
     public Uitext uitext;
     public ImageChange change;
+    public LoadingScreenManager load;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,8 @@ public class TextWriterSanmaIf : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            load.LoadLoadingScreen();
+            yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("Home");
         }
         yield return 0;
