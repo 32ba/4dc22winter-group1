@@ -32,6 +32,8 @@ public class QuizManager : MonoBehaviour
     private float _progress = 0;
     private Button[] _answerButtons;
 
+    private const int correctPointAward = 5000;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -76,7 +78,7 @@ public class QuizManager : MonoBehaviour
             //正解なら正しい答えをハイライトし、丸の記号を出し、ポイントを加算
             correctTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
-            DataManager.AddPoint(500);
+            DataManager.AddPoint(correctPointAward);
         }
         else
         {
