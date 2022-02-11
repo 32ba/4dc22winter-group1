@@ -28,7 +28,7 @@ public class TenjoManager : MonoBehaviour
         }
         else
         {
-            tenjoText.text = $"あと{gachaParameter.tenjou - DataManager.GetGachaCount()}回でSSSR確定！！！";
+            tenjoText.text = $"あと{gachaParameter.tenjou - DataManager.GetGachaCount()}回で本マグロ確定！";
         }
     }
 

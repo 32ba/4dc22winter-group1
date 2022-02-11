@@ -17,9 +17,10 @@ public class GachaUIManager : MonoBehaviour
     public GameObject backButtonHome;
     public GameObject backButtonFinish;
 
-    public Text startGachaButtonText;
+    // public Text startGachaButtonText;
     public Text retryGachaButtonText;
-    public Text tenjoText;
+    public Text tenjoTextHome;
+    public Text tenjoTextFinish;
     public AudioSource gachaSE;
     public GachaResultUI resultItemUI;
 
@@ -35,13 +36,15 @@ public class GachaUIManager : MonoBehaviour
         {
             gachaHomeUIObject.SetActive(true);
 
-            startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
+            // startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
 
             backButtonHome.SetActive(true);
             if (isTutorial)
             {
                 backButtonHome.SetActive(false);
             }
+
+            TenjoManager.instance.UpdateUI(gachaParameter, tenjoTextHome);
         }
         else if (state == GachaState.WAIT)
         {
@@ -67,7 +70,7 @@ public class GachaUIManager : MonoBehaviour
         {
             gachaFinishUIObject.SetActive(true);
 
-            startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
+            // startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
 
             retryButton.SetActive(true);
             backButtonFinish.SetActive(true);
@@ -78,7 +81,7 @@ public class GachaUIManager : MonoBehaviour
                 retryButton.SetActive(false);
             }
 
-            TenjoManager.instance.UpdateUI(gachaParameter, tenjoText);
+            TenjoManager.instance.UpdateUI(gachaParameter, tenjoTextFinish);
         }
     }
 

@@ -9,6 +9,6 @@ public class ShowPoint : MonoBehaviour
 
     void Update()
     {
-        pointText.text = $"{DataManager.GetPoint()}P";
+        pointText.text = $"{DataManager.GetPoint()}‰~";
     }
 }
