@@ -37,12 +37,17 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        loadingOverlayObject.SetActive(true);
         Array.Resize(ref _answerButtons, answerButtonObjects.Length);
         for (int i = 0; i < answerButtonObjects.Length; i++) _answerButtons[i] = answerButtonObjects[i].GetComponent<Button>();
         bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	'); //テキストファイルから問題をリストへ読み込み
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
         _questionId = UnityEngine.Random.Range(0, _questionData.Count); //何問目を出題するかを決める
-        SetQuestion(_questionData, _questionId); //問題文、回答を各テキストフィールドへ反映
+        DelayAsync(UnityEngine.Random.Range(0,0.5f), () =>
+        {
+            loadingOverlayObject.SetActive(false);
+            SetQuestion(_questionData, _questionId); //問題文、回答を各テキストフィールドへ反映
+        }).Forget();
         DelayAsync(1.0f, () =>
         {
             foreach (var t in answerButtonObjects) t.SetActive(true);
@@ -107,12 +112,7 @@ public class QuizManager : MonoBehaviour
     /// </summary>
     private void OnClickUINextButton()
     {
-        loadingOverlayObject.SetActive(true);
-        DelayAsync(UnityEngine.Random.Range(0,0.5f), () =>
-        {
-            loadingOverlayObject.SetActive(false);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }).Forget();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
@@ -182,6 +182,7 @@ public class QuizManager : MonoBehaviour
         timeBarImage.fillAmount = _progress;
         if(_progress >= 1f)OnClickAnswerButton(4);
     }
+    
     /// <summary>
     /// 指定された秒数後に任意のアクションを実行するクラス
     /// </summary>
