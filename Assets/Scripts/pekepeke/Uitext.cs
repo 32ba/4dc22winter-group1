@@ -30,8 +30,8 @@ public class Uitext : MonoBehaviour
     // 通常会話用のテキストを生成する関数
     public void DrawText(string name, string text)
     {
-        nameText.text = name + "\n「";
-        StartCoroutine("CoDrawText", text + "」");
+        nameText.text = name + "\n";
+        StartCoroutine("CoDrawText", "「"+text + "」");
     }
 
     // テキストがヌルヌル出てくるためのコルーチン
