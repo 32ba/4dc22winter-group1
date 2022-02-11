@@ -34,9 +34,6 @@ public class GachaManager : MonoBehaviour
 
     private float animationTime = 0f;
 
-    private bool canBackFromHome = true;
-    private bool canRetry = true;
-
     // Start is called before the first frame update
     void Start()
     {

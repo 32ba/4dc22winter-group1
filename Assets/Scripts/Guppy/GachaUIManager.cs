@@ -72,8 +72,8 @@ public class GachaUIManager : MonoBehaviour
             retryButton.SetActive(true);
             backButtonFinish.SetActive(true);
 
-            // クリア条件を満たしていたらリトライできない
-            if (isGameClear)
+            // クリア時またはチュートリアル時にはリトライできない
+            if (isGameClear || isTutorial)
             {
                 retryButton.SetActive(false);
             }
