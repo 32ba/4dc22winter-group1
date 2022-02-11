@@ -19,11 +19,11 @@ public class TextWritterEnding : MonoBehaviour
         while (!uitext.IsClicked()) yield return 0;
     }
 
-    IEnumerator Home()
+    IEnumerator Title()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("Home");
+            SceneManager.LoadScene("Title");
         }
         yield return 0;
     }
@@ -52,6 +52,7 @@ public class TextWritterEnding : MonoBehaviour
         uitext.DrawText("依頼主", "この魚屋噂通りほんとに闇深いですね");
         yield return StartCoroutine("Skip");
 
+        change.ChangeAngry();
         uitext.DrawText("探偵", "もう金むしりとる気しかないからな！");
         yield return StartCoroutine("Skip");
 
@@ -60,6 +61,6 @@ public class TextWritterEnding : MonoBehaviour
 
         uitext.DrawText("探偵", "汚い大人やな！汚い大人やで！ホンマ！");
         yield return StartCoroutine("Skip");
-        yield return StartCoroutine("Home");
+        yield return StartCoroutine("Title");
     }
 }

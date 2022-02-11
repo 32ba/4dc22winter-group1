@@ -39,6 +39,7 @@ public class TextWriterSanmaIf : MonoBehaviour
         uitext.DrawText("依頼主", "そうですね。気長にガチャを回し続けますか。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSmile();
         uitext.DrawText("探偵", "ええ。そうしましょう。");
         yield return StartCoroutine("Skip");
 

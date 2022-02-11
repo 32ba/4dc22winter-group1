@@ -46,7 +46,7 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "実はですねぇ、今年の夏頃に村の北の方に新しく魚屋ができたんですが・・・");
         yield return StartCoroutine("Skip");
 
-        change.ChangeSad();
+        change.ChangeMagao();
         uitext.DrawText("探偵", "・・・");
         yield return StartCoroutine("Skip");
 
@@ -63,6 +63,7 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "はい、それで私のほうでその店に聞くと、店員曰く「ガチャ？」という方式の売り方をしているみたいなんです。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSad();
         uitext.DrawText("探偵", "確かに変な売り方ですね。とても儲けが出る売り方とは思えないです。");
         yield return StartCoroutine("Skip");
 
@@ -72,7 +73,7 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("依頼主", "そこで探偵さんには、本当にマグロを仕入れているのかそのお店を調査してもらいたくて・・・");
         yield return StartCoroutine("Skip");
 
-        change.ChangeSad();
+        change.ChangeMagao();
         uitext.DrawText("探偵", "・・・");
         yield return StartCoroutine("Skip");
 
@@ -86,7 +87,6 @@ public class TextWriterTuterial : MonoBehaviour
         uitext.DrawText("この村は海からかなり離れており、新鮮な魚を運んでくるには相応の費用が掛かることは想像がつく。");
         yield return StartCoroutine("Skip");
 
-        change.ChangeSad();
         uitext.DrawText("しかし、話題に挙がった魚屋で本当にマグロ仕入れているのかは分からない。");
         yield return StartCoroutine("Skip");
 

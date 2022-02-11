@@ -19,11 +19,11 @@ public class TextWriterUraEnd : MonoBehaviour
         while (!uitext.IsClicked()) yield return 0;
     }
 
-    IEnumerator Home()
+    IEnumerator Title()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("Home");
+            SceneManager.LoadScene("Title");
         }
         yield return 0;
     }
@@ -45,6 +45,7 @@ public class TextWriterUraEnd : MonoBehaviour
         uitext.DrawText("依頼主", "そうですね。この魚屋が悪事を働いていなくてよかったです。");
         yield return StartCoroutine("Skip");
 
+        change.ChangeSmile();
         uitext.DrawText("探偵", "それでは依頼料なんですけども・・・");
         yield return StartCoroutine("Skip");
 
@@ -57,6 +58,7 @@ public class TextWriterUraEnd : MonoBehaviour
         uitext.DrawText("依頼主", "はい？さすがに高すぎやしませんか?");
         yield return StartCoroutine("Skip");
 
+        change.ChangeAngry();
         uitext.DrawText("探偵", "いえ依頼料は依頼料なんで払ってもらわないと困ります。");
         yield return StartCoroutine("Skip");
 
@@ -67,6 +69,6 @@ public class TextWriterUraEnd : MonoBehaviour
         yield return StartCoroutine("Skip");
 
 
-        yield return StartCoroutine("Home");
+        yield return StartCoroutine("Title");
     }
 }
