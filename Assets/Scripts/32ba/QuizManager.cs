@@ -9,7 +9,6 @@ using Cysharp.Threading.Tasks;
 using UniRx;
 using _32ba;
 
-
 public class QuizManager : MonoBehaviour
 {
     public TextAsset questionFile;
@@ -18,6 +17,7 @@ public class QuizManager : MonoBehaviour
     public GameObject correctTextObject;
     public GameObject incorrectTextObject;
     public GameObject afterAnsweringPanelObject;
+    public GameObject loadingOverlayObject;
     public Button nextButton;
     public Button homeButton;
     public CanvasGroup quizUiCanvasGroup;
@@ -91,16 +91,26 @@ public class QuizManager : MonoBehaviour
     /// </summary>
     private async UniTaskVoid OnClickUIHomeButton()
     {
-        await FadeManager.FadeOut(quizUiCanvasGroup, 0.5f);
+        loadingOverlayObject.SetActive(true);
+        await DelayAsync(UnityEngine.Random.Range(0,0.5f), () =>
+        {
+            loadingOverlayObject.SetActive(false);
+            FadeManager.FadeOut(quizUiCanvasGroup, 1f);
+        });
         SceneManager.LoadScene("Home");
     }
 
     /// <summary>
     /// 次の問題へボタンが押された時に呼ばれるクラス
     /// </summary>
-    private static void OnClickUINextButton()
+    private void OnClickUINextButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        loadingOverlayObject.SetActive(true);
+        DelayAsync(UnityEngine.Random.Range(0,0.5f), () =>
+        {
+            loadingOverlayObject.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }).Forget();
     }
 
     /// <summary>
