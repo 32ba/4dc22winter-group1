@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/pekepeke/sanmaif.unity
     guid: 75fd6888bafce9e4db2fdf85808958d8
+  - enabled: 1
+    path: Assets/Scenes/Guppy/EndlessGacha.unity
+    guid: 52f9fb7d6f11c0a4292c8894f5571e59
   m_configObjects: {}

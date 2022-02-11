@@ -351,9 +351,11 @@ MonoBehaviour:
   sceneTransitionButtons:
   - {fileID: 1688516775}
   - {fileID: 64077442}
+  - {fileID: 1199252140}
   sceneName:
   - tutorial
   - Credit
+  - EndlessGacha
   fadeInTime: 0.3
   fadeOutTime: 0.3
 --- !u!4 &412181790
