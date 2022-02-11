@@ -16,27 +16,14 @@ public enum GachaState
 public class GachaManager : MonoBehaviour
 {
     public GachaParams gachaParameter;
-    // public GachaItem tenjoItem;
-    // public int requirePoint = 1000;
-
-    // public List<GachaWeight> gachaList;
+    public GachaUIManager gachaUIManager;
 
     public GachaResultUI resultUI;
     public GachaAnimation gachaResultAnimation;
 
-    public GameObject gachaResultUIObject;
-    public CubismRenderController gachaRenderController;
-    public GameObject gachaHomeUIObject;
-    public GameObject skipButton;
-    public GameObject retryButton;
-    public GameObject backButton;
-    public Text startGachaButtonText;
-    public Text retryGachaButtonText;
-
-    public Animator gachaAnimAnimator;
     public float gachaAnimationTime = 1.0f;
 
-    public AudioSource gachaSE;
+    public bool debugMode = false;
 
     private Gacha gacha;
     private GachaState gachaState;
@@ -137,65 +124,11 @@ public class GachaManager : MonoBehaviour
 
     private void UpdateUI(GachaState state)
     {
-        if(state == GachaState.HOME)
+        gachaUIManager.UpdateUI(state, gachaParameter);
+
+        if(state == GachaState.START)
         {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 0f;
-            gachaHomeUIObject.SetActive(true);
-            skipButton.SetActive(false);
-            backButton.SetActive(true);
-
-            startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
-        }
-        else if(state == GachaState.FINISH)
-        {
-            gachaResultUIObject.SetActive(true);
-            gachaRenderController.Opacity = 0f;
-            gachaHomeUIObject.SetActive(false);
-            skipButton.SetActive(false);
-            backButton.SetActive(true);
-
-            startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
-
-            if (GameClearManager.instance.IsGameClear())
-            {
-                // クリア条件を満たしたらリトライできなくなる
-                retryButton.SetActive(false);
-            }
-
-            TenjoManager.instance.UpdateUI();
-        }
-        else if(state == GachaState.WAIT)
-        {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 1f;
-            gachaHomeUIObject.SetActive(false);
-            gachaAnimAnimator.SetBool("Start", false);
-            skipButton.SetActive(false);
-            backButton.SetActive(false);
-        }
-        else if(state == GachaState.START)
-        {
-            // 音を鳴らす
-            gachaSE.Play();
-
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 1f;
-            gachaHomeUIObject.SetActive(false);
-            skipButton.SetActive(false);
-            backButton.SetActive(false);
-
             animationTime = gachaAnimationTime;
-            gachaAnimAnimator.SetBool("Start", true);
-        }
-        else if(state == GachaState.SHOW_RESULT)
-        {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 0f;
-            gachaHomeUIObject.SetActive(false);
-            gachaAnimAnimator.SetBool("Start", false);
-            skipButton.SetActive(true);
-            backButton.SetActive(false);
         }
     }
 
@@ -219,18 +152,19 @@ public class GachaManager : MonoBehaviour
 
     public void StartGacha(int count)
     {
-        if(!gachaParameter.CanPlay(DataManager.GetPoint()))
+        if(debugMode || gachaParameter.CanPlay(DataManager.GetPoint()))
+        {
+            DataManager.UsePoint(gachaParameter.requirePoint);
+
+            List<GachaItem> results = DoGacha(count);
+            SetUpGachaResult(results);
+
+            ChangeState(GachaState.WAIT);
+        }
+        else
         {
             Debug.Log("ポイントが足りません");
-
-            return;
         }
-        DataManager.UsePoint(gachaParameter.requirePoint);
-
-        List<GachaItem> results = DoGacha(count);
-        SetUpGachaResult(results);
-
-        ChangeState(GachaState.WAIT);
     }
 
     public void SkipGacha()
