@@ -6,80 +6,88 @@ using Live2D.Cubism.Rendering;
 
 public class GachaUIManager : MonoBehaviour
 {
-    public GameObject gachaResultUIObject;
     public GameObject gachaHomeUIObject;
+    public GameObject gachaWaitUIObject;
+    public GameObject gachaStartUIObject;
+    public GameObject gachaShowResultUIObject;
+    public GameObject gachaFinishUIObject;
+
     public GameObject skipButton;
-
     public GameObject retryButton;
-
-    public GameObject backButton;
-    public CubismRenderController gachaRenderController;
-    public Animator gachaAnimAnimator;
+    public GameObject backButtonHome;
+    public GameObject backButtonFinish;
 
     public Text startGachaButtonText;
     public Text retryGachaButtonText;
     public AudioSource gachaSE;
+    public GachaResultUI resultItemUI;
 
-    public void UpdateUI(GachaState state, GachaParams gachaParameter)
+    public void UpdateUI(GachaState state, GachaParams gachaParameter, bool canSkip = true, bool isTutorial = false, bool isGameClear = false)
     {
+        gachaHomeUIObject.SetActive(false);
+        gachaWaitUIObject.SetActive(false);
+        gachaStartUIObject.SetActive(false);
+        gachaShowResultUIObject.SetActive(false);
+        gachaFinishUIObject.SetActive(false);
+
         if (state == GachaState.HOME)
         {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 0f;
             gachaHomeUIObject.SetActive(true);
-            skipButton.SetActive(false);
-            backButton.SetActive(true);
 
             startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
+
+            backButtonHome.SetActive(true);
+            if (isTutorial)
+            {
+                backButtonHome.SetActive(false);
+            }
+        }
+        else if (state == GachaState.WAIT)
+        {
+            gachaWaitUIObject.SetActive(true);
+        }
+        else if (state == GachaState.START)
+        {
+            gachaStartUIObject.SetActive(true);
+
+            gachaSE.Play();
+        }
+        else if (state == GachaState.SHOW_RESULT)
+        {
+            gachaShowResultUIObject.SetActive(true);
+            skipButton.SetActive(true);
+
+            if (!canSkip)
+            {
+                skipButton.SetActive(false);
+            }
         }
         else if (state == GachaState.FINISH)
         {
-            gachaResultUIObject.SetActive(true);
-            gachaRenderController.Opacity = 0f;
-            gachaHomeUIObject.SetActive(false);
-            skipButton.SetActive(false);
-            backButton.SetActive(true);
+            gachaFinishUIObject.SetActive(true);
 
             startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
 
-            if (GameClearManager.instance.IsGameClear())
+            retryButton.SetActive(true);
+            backButtonFinish.SetActive(true);
+
+            // クリア条件を満たしていたらリトライできない
+            if (isGameClear)
             {
-                // クリア条件を満たしたらリトライできなくなる
                 retryButton.SetActive(false);
             }
 
             TenjoManager.instance.UpdateUI();
         }
-        else if (state == GachaState.WAIT)
-        {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 1f;
-            gachaHomeUIObject.SetActive(false);
-            gachaAnimAnimator.SetBool("Start", false);
-            skipButton.SetActive(false);
-            backButton.SetActive(false);
-        }
-        else if (state == GachaState.START)
-        {
-            // 音を鳴らす
-            gachaSE.Play();
+    }
 
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 1f;
-            gachaHomeUIObject.SetActive(false);
-            skipButton.SetActive(false);
-            backButton.SetActive(false);
+    public void ShowGachaResult(List<GachaItem> items)
+    {
+        resultItemUI.Clear();
 
-            gachaAnimAnimator.SetBool("Start", true);
-        }
-        else if (state == GachaState.SHOW_RESULT)
+        foreach (GachaItem item in items)
         {
-            gachaResultUIObject.SetActive(false);
-            gachaRenderController.Opacity = 0f;
-            gachaHomeUIObject.SetActive(false);
-            gachaAnimAnimator.SetBool("Start", false);
-            skipButton.SetActive(true);
-            backButton.SetActive(false);
+            resultItemUI.AddResult(item);
         }
     }
 }

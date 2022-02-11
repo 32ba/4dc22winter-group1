@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Live2D.Cubism.Rendering;
 
 public enum GachaState
@@ -17,12 +18,12 @@ public class GachaManager : MonoBehaviour
 {
     public GachaParams gachaParameter;
     public GachaUIManager gachaUIManager;
-
-    public GachaResultUI resultUI;
     public GachaAnimation gachaResultAnimation;
+    public GachaStartAnimation gachaStartAnimation;
 
     public float gachaAnimationTime = 1.0f;
 
+    public bool canSkip = true;
     public bool debugMode = false;
 
     private Gacha gacha;
@@ -32,6 +33,10 @@ public class GachaManager : MonoBehaviour
     private List<GachaItem> gachaResults;
 
     private float animationTime = 0f;
+
+    private bool canBackFromHome = true;
+    private bool canRetry = true;
+    private bool IsTutorial = false;
 
     // Start is called before the first frame update
     void Start()
@@ -114,17 +119,32 @@ public class GachaManager : MonoBehaviour
 
     private void OnChangeState(GachaState state)
     {
+        // ガチャを１回も引いてない場合はチュートリアル扱い
+        IsTutorial = (DataManager.GetGachaCount() == 0);
+
         UpdateUI(state);
+        gachaStartAnimation.UpdateState(state);
         if(state == GachaState.FINISH)
         {
             gachaResultAnimation.FinishAnimation();
-            ShowGachaResult(resultUI, gachaResults);
+            gachaUIManager.ShowGachaResult(gachaResults);
         }
     }
 
     private void UpdateUI(GachaState state)
     {
-        gachaUIManager.UpdateUI(state, gachaParameter);
+        if (GameClearManager.instance.IsGameClear())
+        {
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isGameClear: true);
+        }
+        else if (IsTutorial)
+        {
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isTutorial: true);
+        }
+        else
+        {
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip);
+        }
 
         if(state == GachaState.START)
         {
@@ -187,16 +207,6 @@ public class GachaManager : MonoBehaviour
         }
     }
 
-    private void ShowGachaResult(GachaResultUI resultUI, List<GachaItem> items)
-    {
-        resultUI.Clear();
-
-        foreach(GachaItem item in items)
-        {
-            resultUI.AddResult(item);
-        }
-    }
-
     private List<GachaItem> DoGacha(int count)
     {
         List<GachaItem> gachaResults = new List<GachaItem>();
@@ -215,5 +225,23 @@ public class GachaManager : MonoBehaviour
         }
 
         return gachaResults;
+    }
+
+    public void OnClickBackButton()
+    {
+        if (GameClearManager.instance.IsGameClear())
+        {
+            GameClearManager.instance.GameClearEvent();
+        }
+        else
+        {
+            BackToMenu();
+        }
+    }
+
+    void BackToMenu()
+    {
+        // メニューに戻る処理
+        SceneManager.LoadScene("Home");
     }
 }
