@@ -13,14 +13,14 @@ using _32ba;
 public class QuizManager : MonoBehaviour
 {
     public TextAsset questionFile;
-    public GameObject choicesA;
-    public GameObject choicesB;
-    public GameObject choicesC;
-    public GameObject choicesD;
+    public GameObject[] answerButtonObjects;
+    public GameObject timeLimitBarObject;
     public GameObject correctTextObject;
     public GameObject incorrectTextObject;
     public GameObject afterAnsweringPanelObject;
-    public GameObject timeLimitBarObject;
+    public Button nextButton;
+    public Button homeButton;
+    public CanvasGroup quizUiCanvasGroup;
     public Image timeBarImage;
     public Text questionText;
 
@@ -30,40 +30,48 @@ public class QuizManager : MonoBehaviour
     private bool _isEnableTimer = false;
     private float _countTime = 0;
     private float _progress = 0;
+    private Button[] _answerButtons;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	');//テキストファイルから問題をリストへ読み込み
+        Array.Resize(ref _answerButtons, answerButtonObjects.Length);
+        for (int i = 0; i < answerButtonObjects.Length; i++) _answerButtons[i] = answerButtonObjects[i].GetComponent<Button>();
+        bool isQuestionCsvLoaded = CsvReader.Read(questionFile, _questionData, '	'); //テキストファイルから問題をリストへ読み込み
         Debug.Log(isQuestionCsvLoaded ? "問題CSVの読み込みに成功しました" : "問題CSVの読み込みに失敗しました");
-        _questionId = UnityEngine.Random.Range(0, _questionData.Count);//何問目を出題するかを決める
-        SetQuestion(_questionData, _questionId);//問題文、回答を各テキストフィールドへ反映
-        DelayAsync(1.0f, () => {
-            choicesA.SetActive(true);
-            choicesB.SetActive(true);
-            choicesC.SetActive(true);
-            choicesD.SetActive(true);
-            timeLimitBarObject.SetActive(true);//回答ボタンとタイムリミットを表示するバーを表示
-            _isEnableTimer = true;//タイマー有効化
+        _questionId = UnityEngine.Random.Range(0, _questionData.Count); //何問目を出題するかを決める
+        SetQuestion(_questionData, _questionId); //問題文、回答を各テキストフィールドへ反映
+        DelayAsync(1.0f, () =>
+        {
+            foreach (var t in answerButtonObjects) t.SetActive(true);
+            timeLimitBarObject.SetActive(true); //回答ボタンとタイムリミットを表示するバーを表示
+            _isEnableTimer = true; //タイマー有効化
         }).Forget();
+        nextButton.OnClickAsObservable().First().Subscribe(_ => OnClickUINextButton()).AddTo(this);
+        homeButton.OnClickAsObservable().First().Subscribe(_ => OnClickUIHomeButton().Forget()).AddTo(this);
+        for (int i = 0; i < answerButtonObjects.Length; i++)
+        {
+            var num = i;
+            _answerButtons[i].OnClickAsObservable().First().Subscribe(_ => OnClickAnswerButton(num)).AddTo(this);
+        }
     }
 
     private void Update()
     {
-        if (_isEnableTimer)TimeLimitCounter(5.0f);//タイマーが有効な間、タイマーを実行
+        if (_isEnableTimer) TimeLimitCounter(5.0f); //タイマーが有効な間、タイマーを実行
     }
 
     /// <summary>
     /// 回答ボタンを押した時に呼ばれる関数
     /// </summary>
-    /// <param name="answer">押されたボタンに対応するキー</param>
-    public void OnClickAnswerButton(string answer)
+    /// <param name="buttonID">押されたボタンに対応するID</param>
+    private void OnClickAnswerButton(int buttonID)
     {
-        if (_isAlreadyAnswered) return;//すでに回答済みなら、その後はボタンを反応させないようにする
+        if (_isAlreadyAnswered) return; //すでに回答済みなら、その後はボタンを反応させないようにする
         _isAlreadyAnswered = true;
         _isEnableTimer = false;
-        DelayAsync(1.0f, () => {afterAnsweringPanelObject.SetActive(true);}).Forget(); //次へ進むボタンを表示
-        if (AnswerQuestion(_questionData, _questionId, answer))
+        DelayAsync(1.0f, () => { afterAnsweringPanelObject.SetActive(true); }).Forget(); //次へ進むボタンを表示
+        if (AnswerQuestion(_questionData, _questionId, buttonID))
         {
             //正解なら正しい答えをハイライトし、丸の記号を出し、ポイントを加算
             correctTextObject.SetActive(true);
@@ -77,22 +85,22 @@ public class QuizManager : MonoBehaviour
             HighlightCorrectAnswer(_questionData, _questionId);
         }
     }
+    
+    /// <summary>
+    /// ホームへ戻るボタンが押されたときに呼ばれるクラス
+    /// </summary>
+    private async UniTaskVoid OnClickUIHomeButton()
+    {
+        await FadeManager.FadeOut(quizUiCanvasGroup, 0.5f);
+        SceneManager.LoadScene("Home");
+    }
 
     /// <summary>
-    /// クイズ回答後に出てくるボタンを制御する関数
+    /// 次の問題へボタンが押された時に呼ばれるクラス
     /// </summary>
-    /// <param name="mode">押されたボタンのモード</param>
-    public void OnClickUIButton(string mode)
+    private static void OnClickUINextButton()
     {
-        switch (mode)
-        {
-            case "next":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                break;
-            case "home":
-                SceneManager.LoadScene("Home");
-                break;
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
@@ -103,10 +111,7 @@ public class QuizManager : MonoBehaviour
     private void SetQuestion(List<string[]> data, int id)
     {
         questionText.text = _questionData[id][0];
-        choicesA.GetComponentInChildren<Text>().text = data[id][1];
-        choicesB.GetComponentInChildren<Text>().text = data[id][2];
-        choicesC.GetComponentInChildren<Text>().text = data[id][3];
-        choicesD.GetComponentInChildren<Text>().text = data[id][4];
+        for (var i = 0; i < answerButtonObjects.Length; i++) answerButtonObjects[i].GetComponentInChildren<Text>().text = data[id][i + 1];
     }
     
     /// <summary>
@@ -114,11 +119,12 @@ public class QuizManager : MonoBehaviour
     /// </summary>
     /// <param name="data">問題データ</param>
     /// <param name="id">問題番号</param>
-    /// <param name="answer">回答</param>
+    /// <param name="buttonID">押されたボタンに対応するID</param>
     /// <returns></returns>
-    private bool AnswerQuestion(List<string[]> data, int id, string answer)
+    private static bool AnswerQuestion(List<string[]> data, int id, int buttonID)
     {
-        var isCorrect = ((data[id][5] == answer || data[id][5] == "X") && answer != "TimeOut");
+        string[] answer = { "A", "B", "C", "D" ,"Time_out"};
+        var isCorrect = ((data[id][5] == answer[buttonID] || data[id][5] == "X") && buttonID != 4);
         Debug.Log(isCorrect ? "正解" : "不正解");
         return isCorrect;
     }
@@ -127,38 +133,28 @@ public class QuizManager : MonoBehaviour
     /// 正しい選択肢のボタンをハイライトするクラス
     /// </summary>
     /// <param name="data">クイズデータ</param>
-    /// <param name="id">問題番号</param>
-    private void HighlightCorrectAnswer(List<string[]> data, int id)
+    /// <param name="questionID">問題番号</param>
+    private void HighlightCorrectAnswer(List<string[]> data, int questionID)
     {
-        var choicesAButton = choicesA.GetComponent<Button>();
-        var choicesBButton = choicesB.GetComponent<Button>();
-        var choicesCButton = choicesC.GetComponent<Button>();
-        var choicesDButton = choicesD.GetComponent<Button>();
-        choicesAButton.interactable = false;
-        choicesBButton.interactable = false;
-        choicesCButton.interactable = false;
-        choicesDButton.interactable = false;
+        foreach (var t in _answerButtons) t.interactable = false;
         
-        var correctAnswer = data[id][5];
+        var correctAnswer = data[questionID][5];
         switch (correctAnswer)
         {
             case "A":
-                choicesAButton.interactable = true;
+                _answerButtons[0].interactable = true;
                 break;
             case "B":
-                choicesBButton.interactable = true;
+                _answerButtons[1].interactable = true;
                 break;
             case "C":
-                choicesCButton.interactable = true;
+                _answerButtons[2].interactable = true;
                 break;
             case "D":
-                choicesDButton.interactable = true;
+                _answerButtons[3].interactable = true;
                 break;
             case "X":
-                choicesAButton.interactable = true;
-                choicesBButton.interactable = true;
-                choicesCButton.interactable = true;
-                choicesDButton.interactable = true;
+                foreach (var t in _answerButtons) t.interactable = true;
                 break;
         }
     }
@@ -172,14 +168,14 @@ public class QuizManager : MonoBehaviour
         _countTime += Time.deltaTime;
         _progress = _countTime / seconds;
         timeBarImage.fillAmount = _progress;
-        if(_progress >= 1f)OnClickAnswerButton("TimeOut");
+        if(_progress >= 1f)OnClickAnswerButton(4);
     }
     /// <summary>
     /// 指定された秒数後に任意のアクションを実行するクラス
     /// </summary>
     /// <param name="seconds">待つ秒数</param>
     /// <param name="callback">実行したい任意のアクション</param>
-    private async UniTask DelayAsync(float seconds, UnityAction callback)
+    private static async UniTask DelayAsync(float seconds, UnityAction callback)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(seconds));
         callback?.Invoke();
