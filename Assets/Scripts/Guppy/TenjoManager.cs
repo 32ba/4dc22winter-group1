@@ -25,6 +25,7 @@ public class TenjoManager : MonoBehaviour
         if (tenjoFlag)
         {
             tenjoText.text = $"";
+            tenjoFlag = false;
         }
         else
         {

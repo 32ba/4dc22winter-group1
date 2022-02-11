@@ -174,10 +174,12 @@ public class GachaManager : MonoBehaviour
 
     public void StartGacha(int count)
     {
-        if(debugMode || gachaParameter.CanPlay(DataManager.GetPoint()))
+        if(DataManager.IsEndlessMode() || debugMode || gachaParameter.CanPlay(DataManager.GetPoint()))
         {
-            DataManager.UsePoint(gachaParameter.requirePoint);
-
+            if (!DataManager.IsEndlessMode() && !debugMode)
+            {
+                DataManager.UsePoint(gachaParameter.requirePoint);
+            }
             List<GachaItem> results = DoGacha(count);
             SetUpGachaResult(results);
 
@@ -201,7 +203,7 @@ public class GachaManager : MonoBehaviour
 
         foreach (GachaItem item in results)
         {
-            if (item.isGameClearItem)
+            if (item.isGameClearItem && !DataManager.IsEndlessMode())
             {
                 GameClearManager.instance.SetGameClear(true);
             }
@@ -231,7 +233,12 @@ public class GachaManager : MonoBehaviour
 
     public void OnClickBackButton()
     {
-        if (GameClearManager.instance.IsGameClear())
+        if (DataManager.IsEndlessMode())
+        {
+            DataManager.EndEndlessMode();
+            SceneManager.LoadScene("Title");
+        }
+        else if (GameClearManager.instance.IsGameClear())
         {
             if (DataManager.IsTutorialMode())
             {

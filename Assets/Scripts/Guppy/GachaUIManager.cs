@@ -26,7 +26,13 @@ public class GachaUIManager : MonoBehaviour
     public GameObject pointErrorHome;
     public GameObject pointErrorFinish;
 
-    public void UpdateUI(GachaState state, GachaParams gachaParameter, bool canSkip = true, bool isTutorial = false, bool isGameClear = false)
+    public void UpdateUI(
+        GachaState state,
+        GachaParams gachaParameter,
+        bool canSkip = true,
+        bool isTutorial = false,
+        bool isGameClear = false
+        )
     {
         gachaHomeUIObject.SetActive(false);
         gachaWaitUIObject.SetActive(false);
@@ -46,7 +52,7 @@ public class GachaUIManager : MonoBehaviour
                 backButtonHome.SetActive(false);
             }
 
-            if (gachaParameter.CanPlay(DataManager.GetPoint()))
+            if (gachaParameter.CanPlay(DataManager.GetPoint()) || DataManager.IsEndlessMode())
             {
                 pointErrorHome.SetActive(false);
             }
@@ -86,21 +92,22 @@ public class GachaUIManager : MonoBehaviour
             retryButton.SetActive(true);
             backButtonFinish.SetActive(true);
 
-            // クリア時またはチュートリアル時にはリトライできない
-            if (isGameClear || isTutorial)
-            {
-                retryButton.SetActive(false);
-            }
-
             TenjoManager.instance.UpdateUI(gachaParameter, tenjoTextFinish);
 
-            if (gachaParameter.CanPlay(DataManager.GetPoint()))
+            if (gachaParameter.CanPlay(DataManager.GetPoint()) || DataManager.IsEndlessMode())
             {
                 pointErrorFinish.SetActive(false);
             }
             else
             {
                 pointErrorFinish.SetActive(true);
+            }
+
+            // クリア時またはチュートリアル時にはリトライできない
+            if (isGameClear || isTutorial)
+            {
+                retryButton.SetActive(false);
+                pointErrorFinish.SetActive(false);
             }
         }
     }

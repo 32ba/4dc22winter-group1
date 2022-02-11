@@ -7,7 +7,7 @@ public class DataManager
     protected static int currentGachaPoint;
     protected static int currentGachaCount;
     protected static bool tutorialMode;
-
+    protected static bool endlessMode;
     public static void SetPoint(int point)
     {
         currentGachaPoint = point;
@@ -58,5 +58,20 @@ public class DataManager
     public static bool IsTutorialMode()
     {
         return tutorialMode;
+    }
+
+    public static void StartEndlessMode()
+    {
+        endlessMode = true;
+    }
+
+    public static void EndEndlessMode()
+    {
+        endlessMode = false;
+    }
+
+    public static bool IsEndlessMode()
+    {
+        return endlessMode;
     }
 }

@@ -9,6 +9,13 @@ public class ShowPoint : MonoBehaviour
 
     void Update()
     {
-        pointText.text = $"{DataManager.GetPoint()}â~";
+        if (DataManager.IsEndlessMode())
+        {
+            pointText.text = "Åáâ~";
+        }
+        else
+        {
+            pointText.text = $"{DataManager.GetPoint()}â~";
+        }
     }
 }
