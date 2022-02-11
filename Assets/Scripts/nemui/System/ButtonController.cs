@@ -1,8 +1,8 @@
+using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
-using UniRx;
 
 public class ButtonController : MonoBehaviour
 {
@@ -19,29 +19,26 @@ public class ButtonController : MonoBehaviour
 
         canvasGroup = canvasGroup.GetComponent<CanvasGroup>();
 
-        for (int i=0; i<sceneTransitionButtons.Length; i++) {
+        for (int i = 0; i < sceneTransitionButtons.Length; i++)
+        {
             var num = i;
 
             sceneTransitionButtons[i] = sceneTransitionButtons[i].GetComponent<Button>();
             sceneTransitionButtons[i].OnClickAsObservable()
                        .First()
-                       .Subscribe(_ => {
-                           OnClickSceneTransitionButton(num).Forget();
-                       })
+                       .Subscribe(_ =>
+                           OnClickSceneTransitionButton(num).Forget()
+                       )
                        .AddTo(this);
-
-            Debug.Log($"Button{i}: "+sceneTransitionButtons[i]);
-            Debug.Log($"SceneName{i}: "+sceneName[i]);
         }
     }
-    
+
     /// <summary>
     /// ボタンを押した時に画面遷移させるクラス
     /// </summary>
     /// <returns></returns>
     private async UniTaskVoid OnClickSceneTransitionButton(int i)
     {
-        Debug.Log(i);
 
         await FadeManager.FadeOut(canvasGroup, fadeOutTime);
         SceneManager.LoadScene(sceneName[i]);
