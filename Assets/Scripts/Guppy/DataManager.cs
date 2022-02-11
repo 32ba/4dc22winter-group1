@@ -6,6 +6,7 @@ public class DataManager
 {
     protected static int currentGachaPoint;
     protected static int currentGachaCount;
+    protected static bool tutorialMode;
 
     public static void SetPoint(int point)
     {
@@ -47,5 +48,15 @@ public class DataManager
     public static int GetGachaCount()
     {
         return currentGachaCount;
+    }
+
+    public static void SetTutorialMode(bool state)
+    {
+        tutorialMode = state;
+    }
+
+    public static bool IsTutorialMode()
+    {
+        return tutorialMode;
     }
 }

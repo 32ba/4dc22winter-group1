@@ -17,9 +17,6 @@ public class GameClearManager : MonoBehaviour
         instance = this;
     }
 
-    // 裏エンドに移動するか(チュートリアルシーンのみこれをtrueにする)
-    public bool isExtraEnd = false;
-
     private bool gameClear;
 
     public void SetGameClear(bool state)
@@ -32,7 +29,7 @@ public class GameClearManager : MonoBehaviour
         return gameClear;
     }
 
-    public void GameClearEvent()
+    public void GameClearEvent(bool isExtraEnd = false)
     {
         if (isExtraEnd)
         {

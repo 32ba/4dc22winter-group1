@@ -19,6 +19,7 @@ public class GachaUIManager : MonoBehaviour
 
     public Text startGachaButtonText;
     public Text retryGachaButtonText;
+    public Text tenjoText;
     public AudioSource gachaSE;
     public GachaResultUI resultItemUI;
 
@@ -77,7 +78,7 @@ public class GachaUIManager : MonoBehaviour
                 retryButton.SetActive(false);
             }
 
-            TenjoManager.instance.UpdateUI();
+            TenjoManager.instance.UpdateUI(gachaParameter, tenjoText);
         }
     }
 

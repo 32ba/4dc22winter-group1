@@ -18,12 +18,9 @@ public class TenjoManager : MonoBehaviour
         instance = this;
     }
 
-    public GachaParams gachaParameter;
-    public Text tenjoText;
-
     private bool tenjoFlag = false;
 
-    public void UpdateUI()
+    public void UpdateUI(GachaParams gachaParameter, Text tenjoText)
     {
         if (tenjoFlag)
         {
@@ -35,7 +32,7 @@ public class TenjoManager : MonoBehaviour
         }
     }
 
-    public bool CheckTenjo()
+    public bool CheckTenjo(GachaParams gachaParameter)
     {
         if(DataManager.GetGachaCount() >= gachaParameter.tenjou)
         {

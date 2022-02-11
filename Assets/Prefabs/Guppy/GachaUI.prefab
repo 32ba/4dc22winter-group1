@@ -1299,6 +1299,7 @@ MonoBehaviour:
   backButtonFinish: {fileID: 2457877822878069618}
   startGachaButtonText: {fileID: 3348737117492943108}
   retryGachaButtonText: {fileID: 3348737116625787493}
+  tenjoText: {fileID: 3348737117067246431}
   gachaSE: {fileID: 3348737116111281433}
   resultItemUI: {fileID: 3348737117060763462}
 --- !u!114 &3348737117060763463

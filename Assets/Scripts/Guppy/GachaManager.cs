@@ -36,7 +36,6 @@ public class GachaManager : MonoBehaviour
 
     private bool canBackFromHome = true;
     private bool canRetry = true;
-    private bool IsTutorial = false;
 
     // Start is called before the first frame update
     void Start()
@@ -119,9 +118,6 @@ public class GachaManager : MonoBehaviour
 
     private void OnChangeState(GachaState state)
     {
-        // ガチャを１回も引いてない場合はチュートリアル扱い
-        IsTutorial = (DataManager.GetGachaCount() == 0);
-
         UpdateUI(state);
         gachaStartAnimation.UpdateState(state);
         if(state == GachaState.FINISH)
@@ -137,7 +133,7 @@ public class GachaManager : MonoBehaviour
         {
             gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isGameClear: true);
         }
-        else if (IsTutorial)
+        else if (DataManager.IsTutorialMode())
         {
             gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isTutorial: true);
         }
@@ -216,7 +212,7 @@ public class GachaManager : MonoBehaviour
             DataManager.AddGachaCount(1);
             GachaItem result = gacha.GetResult();
 
-            if(TenjoManager.instance.CheckTenjo())
+            if(TenjoManager.instance.CheckTenjo(gachaParameter))
             {
                 // ガチャ天井アイテム
                 result = gachaParameter.tenjouItem;
@@ -231,7 +227,18 @@ public class GachaManager : MonoBehaviour
     {
         if (GameClearManager.instance.IsGameClear())
         {
-            GameClearManager.instance.GameClearEvent();
+            if (DataManager.IsTutorialMode())
+            {
+                GameClearManager.instance.GameClearEvent(isExtraEnd: true);
+            }
+            else
+            {
+                GameClearManager.instance.GameClearEvent(isExtraEnd: false);
+            }
+        }
+        else if (DataManager.IsTutorialMode())
+        {
+            SceneManager.LoadScene("sanmaif");
         }
         else
         {
