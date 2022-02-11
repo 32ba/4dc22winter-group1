@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using _32ba;
+using UnityEditor.Build.Content;
 
 public class QuizManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class QuizManager : MonoBehaviour
     public GameObject incorrectTextObject;
     public GameObject afterAnsweringPanelObject;
     public GameObject loadingOverlayObject;
+    public AudioClip[] quizAudioClips;
+    public AudioSource quizAudioSource;
     public Button nextButton;
     public Button homeButton;
     public CanvasGroup quizUiCanvasGroup;
@@ -47,12 +50,14 @@ public class QuizManager : MonoBehaviour
         {
             loadingOverlayObject.SetActive(false);
             SetQuestion(_questionData, _questionId); //問題文、回答を各テキストフィールドへ反映
-        }).Forget();
-        DelayAsync(1.0f, () =>
-        {
-            foreach (var t in answerButtonObjects) t.SetActive(true);
-            timeLimitBarObject.SetActive(true); //回答ボタンとタイムリミットを表示するバーを表示
-            _isEnableTimer = true; //タイマー有効化
+            AudioPlayer(0);
+            DelayAsync(1.2f, () =>
+                    {
+                        foreach (var t in answerButtonObjects) t.SetActive(true);
+                        timeLimitBarObject.SetActive(true); //回答ボタンとタイムリミットを表示するバーを表示
+                        _isEnableTimer = true; //タイマー有効化
+                        AudioPlayer(1);
+                    }).Forget();
         }).Forget();
         nextButton.OnClickAsObservable().First().Subscribe(_ => OnClickUINextButton()).AddTo(this);
         homeButton.OnClickAsObservable().First().Subscribe(_ => OnClickUIHomeButton().Forget()).AddTo(this);
@@ -74,7 +79,8 @@ public class QuizManager : MonoBehaviour
     /// <param name="buttonID">押されたボタンに対応するID</param>
     private void OnClickAnswerButton(int buttonID)
     {
-        if (_isAlreadyAnswered) return; //すでに回答済みなら、その後はボタンを反応させないようにする
+        if (_isAlreadyAnswered) return;
+        AudioPlayer(1,false);//すでに回答済みなら、その後はボタンを反応させないようにする
         _isAlreadyAnswered = true;
         _isEnableTimer = false;
         DelayAsync(1.0f, () => { afterAnsweringPanelObject.SetActive(true); }).Forget(); //次へ進むボタンを表示
@@ -84,12 +90,14 @@ public class QuizManager : MonoBehaviour
             correctTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
             DataManager.AddPoint(correctPointAward);
+            AudioPlayer(2);
         }
         else
         {
             //不正解なら正しい答えをハイライトし、バツマークを出す
             incorrectTextObject.SetActive(true);
             HighlightCorrectAnswer(_questionData, _questionId);
+            AudioPlayer(3);
         }
     }
     
@@ -182,7 +190,13 @@ public class QuizManager : MonoBehaviour
         timeBarImage.fillAmount = _progress;
         if(_progress >= 1f)OnClickAnswerButton(4);
     }
-    
+
+    private void AudioPlayer(int i, bool play = true)
+    {
+        if (play) quizAudioSource.PlayOneShot(quizAudioClips[i]);
+        else quizAudioSource.Stop();
+    }
+
     /// <summary>
     /// 指定された秒数後に任意のアクションを実行するクラス
     /// </summary>
