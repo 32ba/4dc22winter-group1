@@ -18,7 +18,7 @@ public class GachaUIManager : MonoBehaviour
     public GameObject backButtonFinish;
 
     // public Text startGachaButtonText;
-    public Text retryGachaButtonText;
+    // public Text retryGachaButtonText;
     public Text tenjoTextHome;
     public Text tenjoTextFinish;
     public AudioSource gachaSE;
