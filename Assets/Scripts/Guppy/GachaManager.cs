@@ -36,6 +36,8 @@ public class GachaManager : MonoBehaviour
     public Animator gachaAnimAnimator;
     public float gachaAnimationTime = 1.0f;
 
+    public AudioSource gachaSE;
+
     private Gacha gacha;
     private GachaState gachaState;
 
@@ -174,6 +176,9 @@ public class GachaManager : MonoBehaviour
         }
         else if(state == GachaState.START)
         {
+            // ‰¹‚ð–Â‚ç‚·
+            gachaSE.Play();
+
             gachaResultUIObject.SetActive(false);
             gachaRenderController.Opacity = 1f;
             gachaHomeUIObject.SetActive(false);
