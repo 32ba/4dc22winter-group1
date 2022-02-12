@@ -1117,6 +1117,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 124951300}
     m_Modifications:
     - target: {fileID: 2181844694208326095, guid: be39653fcc483f243bcf96a506f0fd01, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181844694208326095, guid: be39653fcc483f243bcf96a506f0fd01, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 55
       objectReference: {fileID: 0}
@@ -1207,6 +1211,10 @@ PrefabInstance:
     - target: {fileID: 2181844694655952229, guid: be39653fcc483f243bcf96a506f0fd01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181844695588039620, guid: be39653fcc483f243bcf96a506f0fd01, type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2181844695588039620, guid: be39653fcc483f243bcf96a506f0fd01, type: 3}
       propertyPath: m_FontData.m_MinSize
