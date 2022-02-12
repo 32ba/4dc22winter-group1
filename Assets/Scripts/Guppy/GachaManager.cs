@@ -195,12 +195,13 @@ public class GachaManager : MonoBehaviour
             {
                 DataManager.UsePoint(gachaParameter.requirePoint);
             }
+
             List<GachaItem> results = DoGacha(count);
-            SetUpGachaResult(results);
-            
+
             LoadingGameObject.SetActive(true);
             DelayAsync(UnityEngine.Random.Range(0.3f,1f), () =>
             {
+                SetUpGachaResult(results);
                 LoadingGameObject.SetActive(false);
                 ChangeState(GachaState.WAIT);
             }).Forget();
