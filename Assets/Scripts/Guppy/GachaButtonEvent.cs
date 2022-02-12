@@ -20,4 +20,14 @@ public class GachaButtonEvent : MonoBehaviour
     {
         gachaManager.OnClickBackButton();
     }
+
+    public void ShowKakuritsu()
+    {
+        gachaManager.ShowKakuritsuUI();
+    }
+
+    public void HideKakuritsu()
+    {
+        gachaManager.HideKakuritsuUI();
+    }
 }

@@ -26,13 +26,15 @@ public class GachaUIManager : MonoBehaviour
     public GachaResultUI resultItemUI;
     public GameObject pointErrorHome;
     public GameObject pointErrorFinish;
+    public GameObject kakuritsuUI;
 
     public void UpdateUI(
         GachaState state,
         GachaParams gachaParameter,
         bool canSkip = true,
         bool isTutorial = false,
-        bool isGameClear = false
+        bool isGameClear = false,
+        bool showKakuritsuUI = false
         )
     {
         gachaHomeUIObject.SetActive(false);
@@ -40,6 +42,7 @@ public class GachaUIManager : MonoBehaviour
         gachaStartUIObject.SetActive(false);
         gachaShowResultUIObject.SetActive(false);
         gachaFinishUIObject.SetActive(false);
+        kakuritsuUI.SetActive(showKakuritsuUI);
 
         if (state == GachaState.HOME)
         {
@@ -47,7 +50,10 @@ public class GachaUIManager : MonoBehaviour
 
             // startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
 
-            gachaBGM.Play();
+            if(gachaBGM.isPlaying == false)
+            {
+                gachaBGM.Play();
+            }
             backButtonHome.SetActive(true);
             if (isTutorial)
             {

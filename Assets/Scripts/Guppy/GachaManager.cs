@@ -34,6 +34,7 @@ public class GachaManager : MonoBehaviour
     private List<GachaItem> gachaResults;
 
     private float animationTime = 0f;
+    private bool showKakuritsuUI = false;
 
     // Start is called before the first frame update
     void Start()
@@ -139,17 +140,22 @@ public class GachaManager : MonoBehaviour
 
     private void UpdateUI(GachaState state)
     {
+        if (state != GachaState.HOME)
+        {
+            showKakuritsuUI = false;
+        }
+
         if (GameClearManager.instance.IsGameClear())
         {
-            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isGameClear: true);
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, showKakuritsuUI: showKakuritsuUI, isGameClear: true);
         }
         else if (DataManager.IsTutorialMode())
         {
-            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, isTutorial: true);
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, showKakuritsuUI: showKakuritsuUI, isTutorial: true);
         }
         else
         {
-            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip);
+            gachaUIManager.UpdateUI(state, gachaParameter, canSkip: canSkip, showKakuritsuUI: showKakuritsuUI);
         }
 
         if(state == GachaState.START)
@@ -262,6 +268,18 @@ public class GachaManager : MonoBehaviour
         {
             BackToMenu();
         }
+    }
+
+    public void ShowKakuritsuUI()
+    {
+        showKakuritsuUI = true;
+        UpdateUI(gachaState);
+    }
+
+    public void HideKakuritsuUI()
+    {
+        showKakuritsuUI = false;
+        UpdateUI(gachaState);
     }
 
     void BackToMenu()
