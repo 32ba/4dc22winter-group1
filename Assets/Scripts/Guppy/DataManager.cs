@@ -89,6 +89,7 @@ public class DataManager
         InitializeGachaResult();
 
         gachaResult.Clear();
+        gachaResultCount.Clear();
     }
 
     public static void AddGachaItemResult(GachaItem item)

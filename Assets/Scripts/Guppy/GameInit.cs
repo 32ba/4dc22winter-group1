@@ -8,6 +8,7 @@ public class GameInit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DataManager.ResetGachaItemResult();
         DataManager.SetGachaCount(0);
         DataManager.SetPoint(initialPoint);
         DataManager.SetTutorialMode(true);
