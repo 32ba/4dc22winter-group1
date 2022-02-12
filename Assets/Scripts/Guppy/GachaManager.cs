@@ -207,6 +207,7 @@ public class GachaManager : MonoBehaviour
             {
                 GameClearManager.instance.SetGameClear(true);
             }
+            DataManager.AddGachaItemResult(item);
             gachaResultAnimation.AddGachaItem(item);
         }
     }
