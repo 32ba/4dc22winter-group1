@@ -28,7 +28,8 @@ public class QuizBGMManager : MonoBehaviour
     private void OnSceneLoaded(Scene next, LoadSceneMode mode)
     {
         if(next.name == "quiz") return;
-        Destroy(gameObject);
+        Destroy(Instance.gameObject);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
 }
