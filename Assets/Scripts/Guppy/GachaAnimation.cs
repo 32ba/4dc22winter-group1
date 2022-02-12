@@ -49,11 +49,11 @@ public class GachaAnimation : MonoBehaviour
             SetLive2DObject(currentGachaItem.live2DModel);
             if (currentGachaItem.isGameClearItem)
             {
-                magroSE.Play();
+                magroSE.PlayOneShot(magroSE.clip);
             }
             else
             {
-                sanmaSE.Play();
+                sanmaSE.PlayOneShot(sanmaSE.clip);
             }
         }
         else
