@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using _32ba;
-using UnityEditor.Build.Content;
 
 public class QuizManager : MonoBehaviour
 {
