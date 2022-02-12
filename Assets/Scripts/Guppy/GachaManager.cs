@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Live2D.Cubism.Rendering;
+using UnityEngine.Events;
 
 public enum GachaState
 {
@@ -26,6 +29,8 @@ public class GachaManager : MonoBehaviour
 
     public bool canSkip = true;
     public bool debugMode = false;
+
+    public GameObject LoadingGameObject;
 
     private Gacha gacha;
     private GachaState gachaState;
@@ -192,8 +197,14 @@ public class GachaManager : MonoBehaviour
             }
             List<GachaItem> results = DoGacha(count);
             SetUpGachaResult(results);
-
-            ChangeState(GachaState.WAIT);
+            
+            LoadingGameObject.SetActive(true);
+            DelayAsync(UnityEngine.Random.Range(0.3f,1f), () =>
+            {
+                LoadingGameObject.SetActive(false);
+                ChangeState(GachaState.WAIT);
+            }).Forget();
+            
         }
         else
         {
@@ -286,5 +297,11 @@ public class GachaManager : MonoBehaviour
     {
         // ÉÅÉjÉÖÅ[Ç…ñﬂÇÈèàóù
         SceneManager.LoadScene("Home");
+    }
+    
+    private static async UniTask DelayAsync(float seconds, UnityAction callback)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(seconds));
+        callback?.Invoke();
     }
 }
