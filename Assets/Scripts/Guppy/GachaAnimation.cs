@@ -5,6 +5,8 @@ using UnityEngine;
 public class GachaAnimation : MonoBehaviour
 {
     public Transform targetTransform;
+    public AudioSource sanmaSE;
+    public AudioSource magroSE;
 
     private bool gachaAnimPlaying;
     private Queue<GachaItem> gachaResults;
@@ -45,6 +47,14 @@ public class GachaAnimation : MonoBehaviour
             currentGachaItem = gachaResults.Dequeue();
             animDuration = currentGachaItem.live2DShowDuration;
             SetLive2DObject(currentGachaItem.live2DModel);
+            if (currentGachaItem.isGameClearItem)
+            {
+                magroSE.Play();
+            }
+            else
+            {
+                sanmaSE.Play();
+            }
         }
         else
         {
