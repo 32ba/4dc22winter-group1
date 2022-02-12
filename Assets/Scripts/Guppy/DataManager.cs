@@ -8,6 +8,15 @@ public class DataManager
     protected static int currentGachaCount;
     protected static bool tutorialMode;
     protected static bool endlessMode;
+    protected static List<GachaItem> gachaResult;
+    protected static Dictionary<GachaItem, int> gachaResultCount;
+
+    public DataManager()
+    {
+        gachaResult = new List<GachaItem>();
+        gachaResultCount = new Dictionary<GachaItem, int>();
+    }
+
     public static void SetPoint(int point)
     {
         currentGachaPoint = point;
@@ -73,5 +82,51 @@ public class DataManager
     public static bool IsEndlessMode()
     {
         return endlessMode;
+    }
+
+    public static void ResetGachaItemResult()
+    {
+        InitializeGachaResult();
+
+        gachaResult.Clear();
+    }
+
+    public static void AddGachaItemResult(GachaItem item)
+    {
+        InitializeGachaResult();
+
+        gachaResult.Add(item);
+        if (gachaResultCount.ContainsKey(item))
+        {
+            gachaResultCount[item] += 1;
+        }
+        else
+        {
+            gachaResultCount[item] = 1;
+        }
+    }
+
+    public static int GetGachaItemResultCount(GachaItem item)
+    {
+        InitializeGachaResult();
+
+        if (gachaResultCount.ContainsKey(item))
+        {
+            return gachaResultCount[item];
+        }
+
+        return 0;
+    }
+
+    private static void InitializeGachaResult()
+    {
+        if(gachaResult == null)
+        {
+            gachaResult = new List<GachaItem>();
+        }
+        if(gachaResultCount == null)
+        {
+            gachaResultCount = new Dictionary<GachaItem, int>();
+        }
     }
 }
