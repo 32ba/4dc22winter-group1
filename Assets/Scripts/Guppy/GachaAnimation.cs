@@ -64,6 +64,12 @@ public class GachaAnimation : MonoBehaviour
 
     public void Skip()
     {
+        // そもそもアイテムが存在しない場合はreturn
+        // (謎のエラーでゲームが動かなくなったことが合ったので対策)
+        if(currentGachaItem == null)
+        {
+            return;
+        }
         // マグロのみスキップ不可
         if (currentGachaItem.isGameClearItem == true)
         {

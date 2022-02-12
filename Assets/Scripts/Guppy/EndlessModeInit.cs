@@ -10,8 +10,9 @@ public class EndlessModeInit : MonoBehaviour
     {
         if (isEndlessMode)
         {
-            DataManager.StartEndlessMode();
             DataManager.ResetGachaItemResult();
+            DataManager.SetGachaCount(0);
+            DataManager.StartEndlessMode();
         }
     }
 }
