@@ -52,6 +52,16 @@ public class GachaAnimation : MonoBehaviour
         }
     }
 
+    public void Skip()
+    {
+        // マグロのみスキップ不可
+        if (currentGachaItem.isGameClearItem == true)
+        {
+            return;
+        }
+        Next();
+    }
+
     public void FinishAnimation()
     {
         gachaAnimPlaying = false;

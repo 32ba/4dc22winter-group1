@@ -105,9 +105,13 @@ public class GachaManager : MonoBehaviour
         }
         else if(state == GachaState.SHOW_RESULT)
         {
-            if (!gachaResultAnimation.IsAnimPlaying() || doSkip)
+            if (doSkip)
             {
+                gachaResultAnimation.Skip();
                 doSkip = false;
+            }
+            if (!gachaResultAnimation.IsAnimPlaying())
+            {
                 if (gachaResultAnimation.HasNext())
                 {
                     gachaResultAnimation.Next();
