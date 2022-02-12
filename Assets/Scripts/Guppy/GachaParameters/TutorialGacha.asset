@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TutorialGacha
   m_EditorClassIdentifier: 
   requirePoint: 10000
-  tenjou: 50
+  tenjou: 100
   tenjouItem: {fileID: 11400000, guid: 5904e01ddcf334b4e9e5484605ccd44b, type: 2}
   gachaData:
   - item: {fileID: 11400000, guid: d7dc652fc7a3e5b4a8198e6401ab4715, type: 2}
