@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,11 +11,11 @@ public class ShowPoint : MonoBehaviour
     {
         if (DataManager.IsEndlessMode())
         {
-            pointText.text = "‡‰~";
+            pointText.text = "âˆå††";
         }
         else
         {
-            pointText.text = $"{DataManager.GetPoint()}‰~";
+            pointText.text = $"{DataManager.GetPoint()}å††";
         }
     }
 }

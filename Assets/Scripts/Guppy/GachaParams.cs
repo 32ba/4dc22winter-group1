@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,12 +19,12 @@ public class GachaParams : ScriptableObject
 
     public string GachaButtonText_Home()
     {
-        return $"10˜AƒKƒ`ƒƒ({requirePoint}P)";
+        return $"10é€£ã‚¬ãƒãƒ£({requirePoint}P)";
     }
 
     public string GachaButtonText_Retry()
     {
-        return $"‚à‚¤ˆê“x({requirePoint}P)";
+        return $"ã‚‚ã†ä¸€åº¦({requirePoint}P)";
     }
 
     public bool CanPlay(int currentPoint)

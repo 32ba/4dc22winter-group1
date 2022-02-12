@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +29,7 @@ public class TenjoManager : MonoBehaviour
         }
         else
         {
-            tenjoText.text = $"‚ ‚Æ{gachaParameter.tenjou - DataManager.GetGachaCount()}‰ñ‚Å–{ƒ}ƒOƒŠm’èI";
+            tenjoText.text = $"ã‚ã¨{gachaParameter.tenjou - DataManager.GetGachaCount()}å›ã§æœ¬ãƒã‚°ãƒ­ç¢ºå®šï¼";
         }
     }
 

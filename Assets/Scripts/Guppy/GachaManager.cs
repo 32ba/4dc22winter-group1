@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -51,7 +51,7 @@ public class GachaManager : MonoBehaviour
 
         List<GachaWeight> gachaData = gachaParameter.gachaData;
 
-        // ƒ`ƒ…[ƒgƒŠƒAƒ‹ê—p‚ÌƒKƒ`ƒƒ
+        // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«å°‚ç”¨ã®ã‚¬ãƒãƒ£
         if (DataManager.IsTutorialMode())
         {
             gachaData = tutorialGachaParameter.gachaData;
@@ -80,7 +80,7 @@ public class GachaManager : MonoBehaviour
     }
 
     /*
-     * ƒXƒe[ƒg‚ğ‹­§“I‚É•ÏX‚·‚é
+     * ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¼·åˆ¶çš„ã«å¤‰æ›´ã™ã‚‹
      */
     private void ChangeState(GachaState newState)
     {
@@ -89,8 +89,8 @@ public class GachaManager : MonoBehaviour
     }
 
     /*
-     * ƒKƒ`ƒƒƒAƒjƒ‚ğˆêŠ‡‚µ‚ÄXV‚·‚é
-     * ƒAƒjƒƒXƒe[ƒg‚É•ÏX‚ª‚ ‚ê‚Î‚»‚Ì’l‚ğ•Ô‚·
+     * ã‚¬ãƒãƒ£ã‚¢ãƒ‹ãƒ¡ã‚’ä¸€æ‹¬ã—ã¦æ›´æ–°ã™ã‚‹
+     * ã‚¢ãƒ‹ãƒ¡ã‚¹ãƒ†ãƒ¼ãƒˆã«å¤‰æ›´ãŒã‚ã‚Œã°ãã®å€¤ã‚’è¿”ã™
      */
     private GachaState UpdateState(GachaState state)
     {
@@ -209,7 +209,7 @@ public class GachaManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ƒ|ƒCƒ“ƒg‚ª‘«‚è‚Ü‚¹‚ñ");
+            Debug.Log("ãƒã‚¤ãƒ³ãƒˆãŒè¶³ã‚Šã¾ã›ã‚“");
         }
     }
 
@@ -245,7 +245,7 @@ public class GachaManager : MonoBehaviour
 
             if(TenjoManager.instance.CheckTenjo(gachaParameter))
             {
-                // ƒKƒ`ƒƒ“VˆäƒAƒCƒeƒ€
+                // ã‚¬ãƒãƒ£å¤©äº•ã‚¢ã‚¤ãƒ†ãƒ 
                 result = gachaParameter.tenjouItem;
             }
             gachaResults.Add(result);
@@ -296,7 +296,7 @@ public class GachaManager : MonoBehaviour
 
     void BackToMenu()
     {
-        // ƒƒjƒ…[‚É–ß‚éˆ—
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹å‡¦ç†
         SceneManager.LoadScene("Home");
     }
     
