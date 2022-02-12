@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,20 +30,20 @@ public class TextWriterSanmaIf : MonoBehaviour
         }
         yield return 0;
     }
-    // •¶Í‚ğ•\¦‚³‚¹‚éƒRƒ‹[ƒ`ƒ“
+    // æ–‡ç« ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
     IEnumerator Cotest()
     {
-        uitext.DrawText("ˆË—Šå", "ƒTƒ“ƒ}‚µ‚©“–‚½‚ç‚È‚©‚Á‚½‚Å‚·‚ËEEE");
+        uitext.DrawText("ä¾é ¼ä¸»", "ã‚µãƒ³ãƒã—ã‹å½“ãŸã‚‰ãªã‹ã£ãŸã§ã™ã­ãƒ»ãƒ»ãƒ»");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("’T’ã", "‚Ü‚ ‚Ü‚¾10‰ñ‚µ‚©ˆø‚¢‚Ä‚È‚¢‚©‚ç‚Ë‚¥B");
+        uitext.DrawText("æ¢åµ", "ã¾ã‚ã¾ã 10å›ã—ã‹å¼•ã„ã¦ãªã„ã‹ã‚‰ã­ã‡ã€‚");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚»‚¤‚Å‚·‚ËB‹C’·‚ÉƒKƒ`ƒƒ‚ğ‰ñ‚µ‘±‚¯‚Ü‚·‚©B");
+        uitext.DrawText("ä¾é ¼ä¸»", "ãã†ã§ã™ã­ã€‚æ°—é•·ã«ã‚¬ãƒãƒ£ã‚’å›ã—ç¶šã‘ã¾ã™ã‹ã€‚");
         yield return StartCoroutine("Skip");
 
         change.ChangeSmile();
-        uitext.DrawText("’T’ã", "‚¦‚¦B‚»‚¤‚µ‚Ü‚µ‚å‚¤B");
+        uitext.DrawText("æ¢åµ", "ãˆãˆã€‚ãã†ã—ã¾ã—ã‚‡ã†ã€‚");
         yield return StartCoroutine("Skip");
 
         yield return StartCoroutine("Home");

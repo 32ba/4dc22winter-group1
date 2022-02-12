@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,45 +30,45 @@ public class TextWriterUraEnd : MonoBehaviour
         }
         yield return 0;
     }
-    // •¶Í‚ğ•\¦‚³‚¹‚éƒRƒ‹[ƒ`ƒ“
+    // æ–‡ç« ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
     IEnumerator Cotest()
     {
-        uitext.DrawText("— ƒGƒ“ƒfƒBƒ“ƒO");
+        uitext.DrawText("è£ã‚¨ãƒ³ãƒ‡ã‚£ãƒ³ã‚°");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("•Ó‚è‚É‚Í‰½‚Æ‚àŒ¾‚¦‚È‚¢‹ó‹C‚ª•Y‚Á‚Ä‚¢‚½B");
+        uitext.DrawText("è¾ºã‚Šã«ã¯ä½•ã¨ã‚‚è¨€ãˆãªã„ç©ºæ°—ãŒæ¼‚ã£ã¦ã„ãŸã€‚");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚¤[‚ñEEE‚ ‚Á‚³‚èƒ}ƒOƒo‚¿‚á‚¢‚Ü‚µ‚½‚Ë‚¥");
+        uitext.DrawText("ä¾é ¼ä¸»", "ã†ãƒ¼ã‚“ãƒ»ãƒ»ãƒ»ã‚ã£ã•ã‚Šãƒã‚°ãƒ­å‡ºã¡ã‚ƒã„ã¾ã—ãŸã­ã‡");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("’T’ã", "‚Ü‚ŸŒ’‘S‚È¤”„‚ğ‚µ‚Ä‚¢‚Ä‚æ‚©‚Á‚½‚Ì‚Å‚Í‚È‚¢‚Å‚·‚©?");
+        uitext.DrawText("æ¢åµ", "ã¾ãå¥å…¨ãªå•†å£²ã‚’ã—ã¦ã„ã¦ã‚ˆã‹ã£ãŸã®ã§ã¯ãªã„ã§ã™ã‹?");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚»‚¤‚Å‚·‚ËB‚±‚Ì‹›‰®‚ªˆ«–‚ğ“­‚¢‚Ä‚¢‚È‚­‚Ä‚æ‚©‚Á‚½‚Å‚·B");
+        uitext.DrawText("ä¾é ¼ä¸»", "ãã†ã§ã™ã­ã€‚ã“ã®é­šå±‹ãŒæ‚ªäº‹ã‚’åƒã„ã¦ã„ãªãã¦ã‚ˆã‹ã£ãŸã§ã™ã€‚");
         yield return StartCoroutine("Skip");
 
         change.ChangeSmile();
-        uitext.DrawText("’T’ã", "‚»‚ê‚Å‚ÍˆË—Š—¿‚È‚ñ‚Å‚·‚¯‚Ç‚àEEE");
+        uitext.DrawText("æ¢åµ", "ãã‚Œã§ã¯ä¾é ¼æ–™ãªã‚“ã§ã™ã‘ã©ã‚‚ãƒ»ãƒ»ãƒ»");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚Í‚¢B‚¢‚­‚ç‚É‚È‚è‚Ü‚·‚©H");
+        uitext.DrawText("ä¾é ¼ä¸»", "ã¯ã„ã€‚ã„ãã‚‰ã«ãªã‚Šã¾ã™ã‹ï¼Ÿ");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("’T’ã", "15–œ‰~‚É‚È‚è‚Ü‚·B");
+        uitext.DrawText("æ¢åµ", "15ä¸‡å††ã«ãªã‚Šã¾ã™ã€‚");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚Í‚¢H‚³‚·‚ª‚É‚‚·‚¬‚â‚µ‚Ü‚¹‚ñ‚©?");
+        uitext.DrawText("ä¾é ¼ä¸»", "ã¯ã„ï¼Ÿã•ã™ãŒã«é«˜ã™ãã‚„ã—ã¾ã›ã‚“ã‹?");
         yield return StartCoroutine("Skip");
 
         change.ChangeAngry();
-        uitext.DrawText("’T’ã", "‚¢‚¦ˆË—Š—¿‚ÍˆË—Š—¿‚È‚ñ‚Å•¥‚Á‚Ä‚à‚ç‚í‚È‚¢‚Æ¢‚è‚Ü‚·B");
+        uitext.DrawText("æ¢åµ", "ã„ãˆä¾é ¼æ–™ã¯ä¾é ¼æ–™ãªã‚“ã§æ‰•ã£ã¦ã‚‚ã‚‰ã‚ãªã„ã¨å›°ã‚Šã¾ã™ã€‚");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‚ ‚ñ‚½‹à‚Ş‚µ‚èæ‚é‹C‚µ‚©‚È‚¢‚â‚ñ‚©B");
+        uitext.DrawText("ä¾é ¼ä¸»", "ã‚ã‚“ãŸé‡‘ã‚€ã—ã‚Šå–ã‚‹æ°—ã—ã‹ãªã„ã‚„ã‚“ã‹ã€‚");
         yield return StartCoroutine("Skip");
 
-        uitext.DrawText("ˆË—Šå", "‰˜‚¢‘ål‚â‚ÈI‰˜‚¢‘ål‚â‚ÅIƒzƒ“ƒ}I");
+        uitext.DrawText("ä¾é ¼ä¸»", "æ±šã„å¤§äººã‚„ãªï¼æ±šã„å¤§äººã‚„ã§ï¼ãƒ›ãƒ³ãƒï¼");
         yield return StartCoroutine("Skip");
 
 

@@ -1,4 +1,4 @@
-
+ï»¿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,27 +14,27 @@ public class Uitext : MonoBehaviour
 
     void Start() { }
 
-    // ƒNƒŠƒbƒN‚ÅŸ‚Ìƒy[ƒW‚ğ•\¦‚³‚¹‚é‚½‚ß‚ÌŠÖ”
+    // ã‚¯ãƒªãƒƒã‚¯ã§æ¬¡ã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤ºã•ã›ã‚‹ãŸã‚ã®é–¢æ•°
     public bool IsClicked()
     {
         if (Input.GetMouseButtonDown(0)) return true;
         return false;
     }
 
-    // ƒiƒŒ[ƒVƒ‡ƒ“—p‚ÌƒeƒLƒXƒg‚ğ¶¬‚·‚éŠÖ”
+    // ãƒŠãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
     public void DrawText(string text)
     {
         nameText.text = "";
         StartCoroutine("CoDrawText", text);
     }
-    // ’Êí‰ï˜b—p‚ÌƒeƒLƒXƒg‚ğ¶¬‚·‚éŠÖ”
+    // é€šå¸¸ä¼šè©±ç”¨ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
     public void DrawText(string name, string text)
     {
         nameText.text = name + "\n";
-        StartCoroutine("CoDrawText", "u"+text + "v");
+        StartCoroutine("CoDrawText", "ã€Œ"+text + "ã€");
     }
 
-    // ƒeƒLƒXƒg‚ªƒkƒ‹ƒkƒ‹o‚Ä‚­‚é‚½‚ß‚ÌƒRƒ‹[ƒ`ƒ“
+    // ãƒ†ã‚­ã‚¹ãƒˆãŒãƒŒãƒ«ãƒŒãƒ«å‡ºã¦ãã‚‹ãŸã‚ã®ã‚³ãƒ«ãƒ¼ãƒãƒ³
     IEnumerator CoDrawText(string text)
     {
         playing = true;
@@ -44,7 +44,7 @@ public class Uitext : MonoBehaviour
             yield return 0;
             time += Time.deltaTime;
 
-            // ƒNƒŠƒbƒN‚³‚ê‚é‚Æˆê‹C‚É•\¦
+            // ã‚¯ãƒªãƒƒã‚¯ã•ã‚Œã‚‹ã¨ä¸€æ°—ã«è¡¨ç¤º
             if (IsClicked()) break;
 
             int len = Mathf.FloorToInt(time / textSpeed);
