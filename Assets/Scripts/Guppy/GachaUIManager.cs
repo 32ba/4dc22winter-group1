@@ -22,6 +22,7 @@ public class GachaUIManager : MonoBehaviour
     public Text tenjoTextHome;
     public Text tenjoTextFinish;
     public AudioSource gachaSE;
+    public AudioSource gachaBGM;
     public GachaResultUI resultItemUI;
     public GameObject pointErrorHome;
     public GameObject pointErrorFinish;
@@ -46,6 +47,7 @@ public class GachaUIManager : MonoBehaviour
 
             // startGachaButtonText.text = gachaParameter.GachaButtonText_Home();
 
+            gachaBGM.Play();
             backButtonHome.SetActive(true);
             if (isTutorial)
             {
@@ -66,16 +68,20 @@ public class GachaUIManager : MonoBehaviour
         else if (state == GachaState.WAIT)
         {
             gachaWaitUIObject.SetActive(true);
+            gachaBGM.Stop();
         }
         else if (state == GachaState.START)
         {
             gachaStartUIObject.SetActive(true);
+            gachaBGM.Stop();
 
             gachaSE.Play();
         }
         else if (state == GachaState.SHOW_RESULT)
         {
             gachaShowResultUIObject.SetActive(true);
+            gachaBGM.Stop();
+
             skipButton.SetActive(true);
 
             if (!canSkip)
@@ -86,6 +92,8 @@ public class GachaUIManager : MonoBehaviour
         else if (state == GachaState.FINISH)
         {
             gachaFinishUIObject.SetActive(true);
+
+            gachaBGM.Play();
 
             // startGachaButtonText.text = gachaParameter.GachaButtonText_Retry();
 
